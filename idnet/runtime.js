@@ -34,6 +34,7 @@ var _ID = null;
 	var idnetUserName = "Guest";
 	var authorized = false;
 	var idnetSessionKey = "";
+	var onlineSavesData = "";
 	
 	// called on startup for each object type
 	typeProto.onCreate = function()
@@ -172,16 +173,18 @@ var _ID = null;
 		}
 	};
 	
-	Acts.prototype.ShowLeaderBoard = function (options)
+	Acts.prototype.ShowLeaderBoard = function ()
 	{
-		if (idNetInst.authorized)
-			_ID.GameAPI.Leaderboards.list(options);
+		if (idNetInst.authorized) {
+			_ID.GameAPI.Leaderboards.list();
+		}
 	};
 	
 	Acts.prototype.SubmitScore = function (score_)
 	{
-		if (idNetInst.authorized)
+		if (idNetInst.authorized) {
 			_ID.GameAPI.Leaderboards.save(score_, jQuery(document).bind(idNetInst,idNetInst.ShowLeaderBoardCallback));
+		}
 	};
 	
 	Acts.prototype.SubmitProfileImage = function (image_)
@@ -190,6 +193,54 @@ var _ID = null;
 			_ID.submit_image(image_, function(response){
 				//console.log(response);
 			});
+	};
+	
+	Acts.prototype.AchievementSave = function (achievementTitle_, achievementKey_)
+	{
+		if (idNetInst.authorized) {
+			var achievementData = {
+				achievement: achievementTitle_,
+				achievementKey: achievementKey_
+			};
+			
+			_ID.GameAPI.Achievements.save(achievementData, function(response){
+				//console.log(response);
+			});
+		}
+	};
+	
+	Acts.prototype.ShowAchievements = function ()
+	{
+		if (idNetInst.authorized) {
+			_ID.GameAPI.Achievements.list();
+		}
+	};
+	
+	Acts.prototype.OnlineSavesSave = function (key_, value_)
+	{
+		if (idNetInst.authorized) {
+			_ID.api('user_data/submit', 'POST', {key: key_, value: value_}, function(response){
+				//console.log(response);
+			});
+		}
+	};
+	
+	Acts.prototype.OnlineSavesRemove = function (key_)
+	{
+		if (idNetInst.authorized) {
+			_ID.api('user_data/remove', 'POST', {key: key_}, function(response){
+				//console.log(response);
+			});
+		}
+	};
+	
+	Acts.prototype.OnlineSavesLoad = function (key_)
+	{
+		if (idNetInst.authorized) {
+			_ID.api('user_data/retrieve', 'POST', {key: key_}, function(response){
+				idNetInst.onlineSavesData = response;
+			});
+		}
 	};
 	
 	pluginProto.acts = new Acts();
@@ -206,6 +257,11 @@ var _ID = null;
 	Exps.prototype.SessionKey = function (ret)
 	{
 		ret.set_string(idNetInst.idnetSessionKey);
+	};
+	
+	Exps.prototype.GateOnlineSavesData = function (ret)
+	{
+		ret.set_string(idNetInst.onlineSavesData);
 	};
 	
 	pluginProto.exps = new Exps();

@@ -56,19 +56,36 @@ AddCondition(1, cf_none, "Is not authorized", "User", "Is not authorized", "True
 //			 description,		// appears in event wizard dialog when selected
 //			 script_name);		// corresponding runtime function name
 
-AddStringParam("Appid_", "appId");
-AddAction(0, af_none, "Init", "Init", "Init", "Initialisation of Idnet", "Init");
+AddStringParam("Appid", "appId");
+AddAction(0, 0, "Init", "Init", "Init", "Initialisation of Idnet", "Init");
 
-AddAction(1, af_none, "Show registration box", "User", "Show registration box", "Show a dialog prompting the user to register an account.", "RegisterPopup");
-AddAction(2, af_none, "Show login box", "User", "Show login box", "Show a dialog prompting the user to login an account.", "LoginPopup");
+AddAction(1, 0, "Show registration box", "User", "Show registration box", "Show a dialog prompting the user to register an account.", "RegisterPopup");
+AddAction(2, 0, "Show login box", "User", "Show login box", "Show a dialog prompting the user to login an account.", "LoginPopup");
 
 AddNumberParam("Score", "The value to submit for the statistic.  Must be a positive integer.");
-AddAction(3, af_none, "Submit statistic", "Statistics", "Submit scores {0}", "Submit a statistic to the IDNet statistics system.", "SubmitScore");
+AddAction(3, 0, "Submit statistic", "Statistics", "Submit scores {0}", "Submit a statistic to the IDNet statistics system.", "SubmitScore");
 
 AddStringParam("Image", "Text to add to the shout box.");
-AddAction(4, af_none, "Show shout box", "Post to profile", "Send image {0}", "Allow the user to post image to page", "SubmitProfileImage");
+AddAction(4, 0, "Send image to profile", "Post to profile", "Send image {0}", "Allow the user to post image to page", "SubmitProfileImage");
 
-AddAction(5, af_none, "Show leaderboard", "Statistics", "Show leaderboard", "ShowLeaderBoard");
+AddAction(5, 0, "Show leaderboard", "Statistics", "Show data leaderboard", "Show data leaderboard", "ShowLeaderBoard");
+
+AddStringParam("AchievementTitle", "AchievementName");
+AddStringParam("AchievementKey", "AchievementKey");
+AddAction(6, 0, "Save achievement", "Achievements", "Save achievement with title {0} and key {1}", "Save achievement", "AchievementSave");
+
+AddAction(7, 0, "Show achievements", "Achievements", "Show achievements", "Show achievements", "ShowAchievements");
+
+AddStringParam("Key", "Key");
+AddStringParam("Value", "Value");
+AddAction(8, 0, "Save user data", "Saves", "Save data to online saves with title {0} and value {1}", "Save user data", "OnlineSavesSave");
+
+AddStringParam("Key", "Key");
+AddAction(9, 0, "Load user data", "Saves", "Load data from online saves with title {0}", "Load user data", "OnlineSavesLoad");
+
+AddStringParam("Key", "Key");
+AddAction(10, 0, "Remove user data", "Saves", "Remove data from online saves with title {0}", "Remove user data", "OnlineSavesRemove");
+
 
 ////////////////////////////////////////
 // Expressions
@@ -84,6 +101,7 @@ AddAction(5, af_none, "Show leaderboard", "Statistics", "Show leaderboard", "Sho
 // example
 AddExpression(0, ef_return_string, "User name", "User", "UserName", "Return the current user's name, or a guest name if not logged in.");
 AddExpression(1, ef_return_string, "Session Key", "User", "SessionKey", "Return session key");
+AddExpression(2, ef_return_string, "User data", "Saves", "GateOnlineSavesData", "Return user data of online saves");
 
 ////////////////////////////////////////
 ACESDone();
