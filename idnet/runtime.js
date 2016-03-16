@@ -11,7 +11,7 @@ cr.plugins_.IDNet = function(runtime)
 	this.runtime = runtime;
 };
 
-var _ID = null;
+//var ID = null;
 
 (function ()
 {
@@ -33,6 +33,7 @@ var _ID = null;
 	var idNetInst = null;
 	var idnetUserName = "Guest";
 	var authorized = false;
+	var userAuthorized = false;
 	var idnetSessionKey = "";
 	var onlineSavesData = "";
 	
@@ -53,7 +54,42 @@ var _ID = null;
 		this._document = window.document;
 		this._unsafeWindow = this._document.defaultView;
 		
-		if(this._document.getElementById("id-jssdk") == null) {
+		window.idAsyncInit = function() {
+			console.log("asyncInit");
+			console.log(ID);
+			//ID = this.window.ID;
+			ID.Event.subscribe("id.init",function() {
+				console.log("id.init event");
+				console.log("ID.initializeComplete");
+				idNetInst.authorized = true;
+			});
+			/*ID.Event.subscribe("auth.authResponseChange",function(response) {
+				console.log("auth.authResponseChange");
+				window.idnet_autologin = function(response){
+					idNetInst.idnetSessionKey = response.sessionKey;
+					idNetInst.idnetUserName = response.user.nickname;
+				}
+				var autologinElement = this._document.createElement("script");
+				autologinElement.src = "https://www.id.net/api/user_data/autologin?appID=" + Reg.appID + "&callback=idnet_autologin";
+				this._document.head.insertBefore(autologinElement,this._document.getElementsByTagName("script")[0]);
+				var autologinElement1 = this._document.createElement("script");
+				autologinElement1.src = "//code.jquery.com/jquery-1.11.2.min.js";
+				this._document.head.insertBefore(autologinElement1,this._document.getElementsByTagName("script")[0]);
+				idNetInst.authorized = response.status == "ok";
+				console.log("ID.authResponse: isAuthorized: " + Std.string(idNetInst.authorized));
+				//this.d.dispatch("auth.authResponseChange");
+			});*/
+		}
+		
+        var fjs = document.head.getElementsByTagName('script')[0];
+        if (document.getElementById('id-jssdk')) {return;}
+        var js = document.createElement('script');
+		js.id = 'id-jssdk';
+        js.src =  document.location.protocol == 'https:' ? "https://scdn.id.net/api/sdk.js" : "http://cdn.id.net/api/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+		
+		
+		/*if(this._document.getElementById("id-jssdk") == null) {
 			var idnetSDKloader = this._document.createElement("script");
 			idnetSDKloader.id = "id-jssdk";
 			if(this._document.location.protocol == "https:") idnetSDKloader.src = "https://scdn.id.net/api/sdk.js"; else idnetSDKloader.src = "http://cdn.id.net/api/sdk.js";
@@ -61,20 +97,20 @@ var _ID = null;
 			console.log("ID.init");
 			window.idAsyncInit = function() {
 				console.log("asyncInit");
-				_ID = this.window.ID;
-				_ID.Event.subscribe("id.init",function() {
+				ID = this.window.ID;
+				ID.Event.subscribe("id.init",function() {
 					console.log("id.init event");
 					console.log("ID.initializeComplete");
 					idNetInst.authorized = true;
 				});
-				_ID.Event.subscribe("auth.authResponseChange",function(response) {
+				ID.Event.subscribe("auth.authResponseChange",function(response) {
 					console.log("auth.authResponseChange");
 					window.idnet_autologin = function(response){
 						idNetInst.idnetSessionKey = response.sessionKey;
 						idNetInst.idnetUserName = response.user.nickname;
 					}
 					var autologinElement = this._document.createElement("script");
-					autologinElement.src = "https://www.id.net/api/user_data/autologin?app_id=" + Reg.app_id + "&callback=idnet_autologin";
+					autologinElement.src = "https://www.id.net/api/user_data/autologin?appID=" + Reg.appID + "&callback=idnet_autologin";
 					this._document.head.insertBefore(autologinElement,this._document.getElementsByTagName("script")[0]);
 					var autologinElement1 = this._document.createElement("script");
 					autologinElement1.src = "//code.jquery.com/jquery-1.11.2.min.js";
@@ -84,7 +120,7 @@ var _ID = null;
 					//this.d.dispatch("auth.authResponseChange");
 				});
 			}
-		}
+		}*/
 	};
 	
 	function ShowLeaderBoardCallback(response) {
@@ -131,6 +167,16 @@ var _ID = null;
 		return !idNetInst.authorized;
 	};
 	
+	Cnds.prototype.UserIsAuthorized = function ()
+	{
+		return idNetInst.userAuthorized;
+	};
+	
+	Cnds.prototype.UserIsNotAuthorized = function ()
+	{
+		return !idNetInst.userAuthorized;
+	};
+	
 	pluginProto.cnds = new Cnds();
 	
 	//////////////////////////////////////
@@ -139,9 +185,9 @@ var _ID = null;
 	
 	Acts.prototype.Init = function (appid_)
 	{
-		if (!idNetInst.authorized) {
+		if (!idNetInst.authorized && ID != null) {
 			console.log("Init set" + appid_);
-			_ID.init({
+			ID.init({
 				appId : appid_
 			});
 		}
@@ -150,10 +196,11 @@ var _ID = null;
 	Acts.prototype.RegisterPopup = function ()
 	{
 		if (idNetInst.authorized)
-			_ID.register(function (response) {
+			ID.register(function (response) {
 				if(response == null) {
 					//this.d.dispatch("auth.fail")
 				} else {
+					idNetInst.userAuthorized = true;
 					//this.d.dispatch("auth.complete");
 				}
 			});
@@ -163,10 +210,11 @@ var _ID = null;
 	{
 		console.log("LoginPopup "+idNetInst.authorized);
 		if (idNetInst.authorized){
-			_ID.login(function (response) {
+			ID.login(function (response) {
 				if(response == null) {
 					//this.d.dispatch("auth.fail")
 				} else {
+					idNetInst.userAuthorized = true;
 					//this.d.dispatch("auth.complete");
 				}
 			});
@@ -176,21 +224,21 @@ var _ID = null;
 	Acts.prototype.ShowLeaderBoard = function ()
 	{
 		if (idNetInst.authorized) {
-			_ID.GameAPI.Leaderboards.list();
+			ID.GameAPI.Leaderboards.list();
 		}
 	};
 	
 	Acts.prototype.SubmitScore = function (score_)
 	{
 		if (idNetInst.authorized) {
-			_ID.GameAPI.Leaderboards.save(score_, jQuery(document).bind(idNetInst,idNetInst.ShowLeaderBoardCallback));
+			ID.GameAPI.Leaderboards.save(score_, jQuery(document).bind(idNetInst,idNetInst.ShowLeaderBoardCallback));
 		}
 	};
 	
 	Acts.prototype.SubmitProfileImage = function (image_)
 	{
 		if (idNetInst.authorized)
-			_ID.submit_image(image_, function(response){
+			ID.submit_image(image_, function(response){
 				//console.log(response);
 			});
 	};
@@ -203,7 +251,7 @@ var _ID = null;
 				achievementKey: achievementKey_
 			};
 			
-			_ID.GameAPI.Achievements.save(achievementData, function(response){
+			ID.GameAPI.Achievements.save(achievementData, function(response){
 				//console.log(response);
 			});
 		}
@@ -212,14 +260,14 @@ var _ID = null;
 	Acts.prototype.ShowAchievements = function ()
 	{
 		if (idNetInst.authorized) {
-			_ID.GameAPI.Achievements.list();
+			ID.GameAPI.Achievements.list();
 		}
 	};
 	
 	Acts.prototype.OnlineSavesSave = function (key_, value_)
 	{
 		if (idNetInst.authorized) {
-			_ID.api('user_data/submit', 'POST', {key: key_, value: value_}, function(response){
+			ID.api('user_data/submit', 'POST', {key: key_, value: value_}, function(response){
 				//console.log(response);
 			});
 		}
@@ -228,7 +276,7 @@ var _ID = null;
 	Acts.prototype.OnlineSavesRemove = function (key_)
 	{
 		if (idNetInst.authorized) {
-			_ID.api('user_data/remove', 'POST', {key: key_}, function(response){
+			ID.api('user_data/remove', 'POST', {key: key_}, function(response){
 				//console.log(response);
 			});
 		}
@@ -237,8 +285,11 @@ var _ID = null;
 	Acts.prototype.OnlineSavesLoad = function (key_)
 	{
 		if (idNetInst.authorized) {
-			_ID.api('user_data/retrieve', 'POST', {key: key_}, function(response){
-				idNetInst.onlineSavesData = response;
+			idNetInst.onlineSavesData = null;
+			ID.api('user_data/retrieve', 'POST', {key: key_}, function(response){
+				if(response != null) {
+					idNetInst.onlineSavesData = response.jsondata;
+				}
 			});
 		}
 	};

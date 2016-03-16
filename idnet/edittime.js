@@ -44,6 +44,8 @@
 				
 AddCondition(0, cf_none, "Is authorized", "User", "Is authorized", "True if authorized (sdk is loaded)", "isAuthorized");
 AddCondition(1, cf_none, "Is not authorized", "User", "Is not authorized", "True if not authorized", "isNotAuthorized");
+AddCondition(2, cf_none, "Is user authorized", "User", "Is user authorized", "True if user is authorized", "UserIsAuthorized");
+AddCondition(3, cf_none, "Is user not authorized", "User", "Is user not authorized", "True if user is not authorized", "UserIsNotAuthorized");
 
 ////////////////////////////////////////
 // Actions
