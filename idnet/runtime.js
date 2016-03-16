@@ -190,6 +190,9 @@ cr.plugins_.IDNet = function(runtime)
 			ID.init({
 				appId : appid_
 			});
+			ID.GameAPI.init(appid_, null, function(data, response) {
+				console.log(response);
+			});
 		}
 	};
 	
