@@ -65,11 +65,13 @@ AddAction(1, 0, "Show registration box", "User", "Show registration box", "Show 
 AddAction(2, 0, "Show login box", "User", "Show login box", "Show a dialog prompting the user to login an account.", "LoginPopup");
 
 AddNumberParam("Score", "The value to submit for the statistic.  Must be a positive integer.");
+AddStringParam("Table", "Table name");
 AddAction(3, 0, "Submit statistic", "Statistics", "Submit scores {0}", "Submit a statistic to the IDNet statistics system.", "SubmitScore");
 
 AddStringParam("Image", "Text to add to the shout box.");
 AddAction(4, 0, "Send image to profile", "Post to profile", "Send image {0}", "Allow the user to post image to page", "SubmitProfileImage");
 
+AddStringParam("Table", "Table name");
 AddAction(5, 0, "Show leaderboard", "Statistics", "Show data leaderboard", "Show data leaderboard", "ShowLeaderBoard");
 
 AddStringParam("AchievementTitle", "AchievementName");

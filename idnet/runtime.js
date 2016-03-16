@@ -224,17 +224,23 @@ cr.plugins_.IDNet = function(runtime)
 		}
 	};
 	
-	Acts.prototype.ShowLeaderBoard = function ()
+	Acts.prototype.ShowLeaderBoard = function (table_)
 	{
 		if (idNetInst.authorized) {
-			ID.GameAPI.Leaderboards.list();
+			ID.GameAPI.Leaderboards.list({table:table_});
 		}
 	};
 	
-	Acts.prototype.SubmitScore = function (score_)
+	Acts.prototype.SubmitScore = function (score_, table_)
 	{
 		if (idNetInst.authorized) {
-			ID.GameAPI.Leaderboards.save(score_, jQuery(document).bind(idNetInst,idNetInst.ShowLeaderBoardCallback));
+			 var score = {
+				table: table_,
+				points: score_
+			};
+			ID.GameAPI.Leaderboards.save(score, function(response){
+						console.log(response);
+			});
 		}
 	};
 	
