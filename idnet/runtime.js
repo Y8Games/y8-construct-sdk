@@ -36,6 +36,8 @@ cr.plugins_.IDNet = function(runtime)
 	var userAuthorized = false;
 	var idnetSessionKey = "";
 	var onlineSavesData = "";
+	var isBlacklisted = 0;
+	var isSponsor = 0;
 	
 	// called on startup for each object type
 	typeProto.onCreate = function()
@@ -224,19 +226,22 @@ cr.plugins_.IDNet = function(runtime)
 		}
 	};
 	
-	Acts.prototype.ShowLeaderBoard = function (table_)
+	Acts.prototype.ShowLeaderBoard = function (table_, mode_, highest_, allowduplicates_)
 	{
 		if (idNetInst.authorized) {
-			ID.GameAPI.Leaderboards.list({table:table_});
+			ID.GameAPI.Leaderboards.list({table:table_, mode: mode_, highest: highest_, allowduplicates: allowduplicates_});
 		}
 	};
 	
-	Acts.prototype.SubmitScore = function (score_, table_)
+	Acts.prototype.SubmitScore = function (score_, table_, allowduplicates_, highest_, playername_)
 	{
 		if (idNetInst.authorized) {
 			 var score = {
 				table: table_,
-				points: score_
+				points: score_,
+				allowduplicates: allowduplicates_,
+				highest: highest_,
+				playername: playername_
 			};
 			ID.GameAPI.Leaderboards.save(score, function(response){
 						console.log(response);
@@ -252,12 +257,14 @@ cr.plugins_.IDNet = function(runtime)
 			});
 	};
 	
-	Acts.prototype.AchievementSave = function (achievementTitle_, achievementKey_)
+	Acts.prototype.AchievementSave = function (achievementTitle_, achievementKey_, overwrite_, allowduplicates_)
 	{
 		if (idNetInst.authorized) {
 			var achievementData = {
-				achievement: achievementTitle_,
-				achievementKey: achievementKey_
+			  achievement: achievementTitle_,
+			  achievementkey: achievementKey_,
+			  overwrite: overwrite_,
+			  allowduplicates: allowduplicates_
 			};
 			
 			ID.GameAPI.Achievements.save(achievementData, function(response){
@@ -303,6 +310,20 @@ cr.plugins_.IDNet = function(runtime)
 		}
 	};
 	
+	Acts.prototype.CheckIsBlacklisted = function () {
+		ID.Protection.isBlacklisted(function(blacklisted){
+			console.log(blacklisted);
+			idNetInst.isBlacklisted = isBlacklisted;
+		});
+	};
+	
+	Acts.prototype.CheckIsSponsor = function () {
+		ID.Protection.isSponsor(function(sponsor){
+			console.log(sponsor);
+			idNetInst.isSponsor = sponsor;
+		});
+	};
+	
 	pluginProto.acts = new Acts();
 	
 	//////////////////////////////////////
@@ -322,6 +343,16 @@ cr.plugins_.IDNet = function(runtime)
 	Exps.prototype.GateOnlineSavesData = function (ret)
 	{
 		ret.set_string(idNetInst.onlineSavesData);
+	};
+	
+	Exps.prototype.GetIsBlacklisted = function (ret)
+	{
+		ret.set_int(idNetInst.isBlacklisted);
+	};
+	
+	Exps.prototype.GetIsSponsor = function (ret)
+	{
+		ret.set_int(idNetInst.isSponsor);
 	};
 	
 	pluginProto.exps = new Exps();

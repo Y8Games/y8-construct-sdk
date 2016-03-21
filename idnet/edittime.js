@@ -66,16 +66,24 @@ AddAction(2, 0, "Show login box", "User", "Show login box", "Show a dialog promp
 
 AddNumberParam("Score", "The value to submit for the statistic.  Must be a positive integer.");
 AddStringParam("Table", "Table name");
+AddNumberParam("Allowduplicates", "Set to 1 if player’s can submit more than one score.");
+AddNumberParam("Highest", "Table name");
+AddStringParam("Playername", "Set playername");
 AddAction(3, 0, "Submit statistic", "Statistics", "Submit scores {0}", "Submit a statistic to the IDNet statistics system.", "SubmitScore");
 
 AddStringParam("Image", "Text to add to the shout box.");
 AddAction(4, 0, "Send image to profile", "Post to profile", "Send image {0}", "Allow the user to post image to page", "SubmitProfileImage");
 
 AddStringParam("Table", "Table name");
+AddStringParam("Mode", "Equals alltime, last30days, last7days, today, or newest.");
+AddNumberParam("Highest", " Set to 0 if a lower score is better.");
+AddNumberParam("Allowduplicates", "Set to 1 if player’s can have more than one score displayed.");
 AddAction(5, 0, "Show leaderboard", "Statistics", "Show data leaderboard", "Show data leaderboard", "ShowLeaderBoard");
 
 AddStringParam("AchievementTitle", "AchievementName");
 AddStringParam("AchievementKey", "AchievementKey");
+AddStringParam("Overwrite", "Allow players to unlock the same achievement more than once.");
+AddStringParam("Allowduplicates", " Allow players to unlock the same achievement and display them seperatly.");
 AddAction(6, 0, "Save achievement", "Achievements", "Save achievement with title {0} and key {1}", "Save achievement", "AchievementSave");
 
 AddAction(7, 0, "Show achievements", "Achievements", "Show achievements", "Show achievements", "ShowAchievements");
@@ -89,6 +97,10 @@ AddAction(9, 0, "Load user data", "Saves", "Load data from online saves with tit
 
 AddStringParam("Key", "Key");
 AddAction(10, 0, "Remove user data", "Saves", "Remove data from online saves with title {0}", "Remove user data", "OnlineSavesRemove");
+
+
+AddAction(11, 0, "CheckIsBlacklisted", "Protection and sponsor API", "Check is domaine on blacklist", "Check is domaine on blacklist", "CheckIsBlacklisted");
+AddAction(12, 0, "CheckIsSponsor", "Protection and sponsor API", "Check is domaine on sponsorlist", "Check is domaine on sponsorlist", "CheckIsSponsor");
 
 
 ////////////////////////////////////////
@@ -106,6 +118,9 @@ AddAction(10, 0, "Remove user data", "Saves", "Remove data from online saves wit
 AddExpression(0, ef_return_string, "User name", "User", "UserName", "Return the current user's name, or a guest name if not logged in.");
 AddExpression(1, ef_return_string, "Session Key", "User", "SessionKey", "Return session key");
 AddExpression(2, ef_return_string, "User data", "Saves", "GateOnlineSavesData", "Return user data of online saves");
+
+AddExpression(3, ef_return_number, "Get is blacklisted", "Protection and sponsor API", "GetIsBlacklisted", "Return is blacklisted");
+AddExpression(4, ef_return_number, "Get is sponsor", "Protection and sponsor API", "GetIsSponsor", "Return get is sponsor");
 
 ////////////////////////////////////////
 ACESDone();
