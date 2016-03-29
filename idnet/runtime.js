@@ -59,6 +59,7 @@ cr.plugins_.IDNet = function(runtime)
 		window.idAsyncInit = function() {
 			console.log("asyncInit");
 			console.log(ID);
+			idNetInst.authorized = true;
 		}
 		
         var fjs = document.head.getElementsByTagName('script')[0];
@@ -139,7 +140,6 @@ cr.plugins_.IDNet = function(runtime)
 			ID.Event.subscribe("id.init",function() {
 				console.log("id.init event");
 				console.log("ID.initializeComplete");
-				idNetInst.authorized = true;
 			});
 			ID.GameAPI.init(appid_, null, function(data, response) {
 				console.log(response);
