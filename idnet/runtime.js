@@ -59,28 +59,6 @@ cr.plugins_.IDNet = function(runtime)
 		window.idAsyncInit = function() {
 			console.log("asyncInit");
 			console.log(ID);
-			//ID = this.window.ID;
-			ID.Event.subscribe("id.init",function() {
-				console.log("id.init event");
-				console.log("ID.initializeComplete");
-				idNetInst.authorized = true;
-			});
-			/*ID.Event.subscribe("auth.authResponseChange",function(response) {
-				console.log("auth.authResponseChange");
-				window.idnet_autologin = function(response){
-					idNetInst.idnetSessionKey = response.sessionKey;
-					idNetInst.idnetUserName = response.user.nickname;
-				}
-				var autologinElement = this._document.createElement("script");
-				autologinElement.src = "https://www.id.net/api/user_data/autologin?appID=" + Reg.appID + "&callback=idnet_autologin";
-				this._document.head.insertBefore(autologinElement,this._document.getElementsByTagName("script")[0]);
-				var autologinElement1 = this._document.createElement("script");
-				autologinElement1.src = "//code.jquery.com/jquery-1.11.2.min.js";
-				this._document.head.insertBefore(autologinElement1,this._document.getElementsByTagName("script")[0]);
-				idNetInst.authorized = response.status == "ok";
-				console.log("ID.authResponse: isAuthorized: " + Std.string(idNetInst.authorized));
-				//this.d.dispatch("auth.authResponseChange");
-			});*/
 		}
 		
         var fjs = document.head.getElementsByTagName('script')[0];
@@ -89,40 +67,6 @@ cr.plugins_.IDNet = function(runtime)
 		js.id = 'id-jssdk';
         js.src =  document.location.protocol == 'https:' ? "https://scdn.id.net/api/sdk.js" : "http://cdn.id.net/api/sdk.js";
         fjs.parentNode.insertBefore(js, fjs);
-		
-		
-		/*if(this._document.getElementById("id-jssdk") == null) {
-			var idnetSDKloader = this._document.createElement("script");
-			idnetSDKloader.id = "id-jssdk";
-			if(this._document.location.protocol == "https:") idnetSDKloader.src = "https://scdn.id.net/api/sdk.js"; else idnetSDKloader.src = "http://cdn.id.net/api/sdk.js";
-			this._document.head.insertBefore(idnetSDKloader,this._document.getElementsByTagName("script")[0]);
-			console.log("ID.init");
-			window.idAsyncInit = function() {
-				console.log("asyncInit");
-				ID = this.window.ID;
-				ID.Event.subscribe("id.init",function() {
-					console.log("id.init event");
-					console.log("ID.initializeComplete");
-					idNetInst.authorized = true;
-				});
-				ID.Event.subscribe("auth.authResponseChange",function(response) {
-					console.log("auth.authResponseChange");
-					window.idnet_autologin = function(response){
-						idNetInst.idnetSessionKey = response.sessionKey;
-						idNetInst.idnetUserName = response.user.nickname;
-					}
-					var autologinElement = this._document.createElement("script");
-					autologinElement.src = "https://www.id.net/api/user_data/autologin?appID=" + Reg.appID + "&callback=idnet_autologin";
-					this._document.head.insertBefore(autologinElement,this._document.getElementsByTagName("script")[0]);
-					var autologinElement1 = this._document.createElement("script");
-					autologinElement1.src = "//code.jquery.com/jquery-1.11.2.min.js";
-					this._document.head.insertBefore(autologinElement1,this._document.getElementsByTagName("script")[0]);
-					idNetInst.authorized = response.status == "ok";
-					console.log("ID.authResponse: isAuthorized: " + Std.string(idNetInst.authorized));
-					//this.d.dispatch("auth.authResponseChange");
-				});
-			}
-		}*/
 	};
 	
 	function ShowLeaderBoardCallback(response) {
@@ -191,6 +135,11 @@ cr.plugins_.IDNet = function(runtime)
 			console.log("Init set" + appid_);
 			ID.init({
 				appId : appid_
+			});
+			ID.Event.subscribe("id.init",function() {
+				console.log("id.init event");
+				console.log("ID.initializeComplete");
+				idNetInst.authorized = true;
 			});
 			ID.GameAPI.init(appid_, null, function(data, response) {
 				console.log(response);
