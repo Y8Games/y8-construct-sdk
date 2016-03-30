@@ -56,12 +56,6 @@ cr.plugins_.IDNet = function(runtime)
 		this._document = window.document;
 		this._unsafeWindow = this._document.defaultView;
 		
-		window.idAsyncInit = function() {
-			console.log("asyncInit");
-			console.log(ID);
-			idNetInst.authorized = true;
-		}
-		
         var fjs = document.head.getElementsByTagName('script')[0];
         if (document.getElementById('id-jssdk')) {return;}
         var js = document.createElement('script');
@@ -131,8 +125,10 @@ cr.plugins_.IDNet = function(runtime)
 	function Acts() {};
 	
 	Acts.prototype.Init = function (appid_)
-	{
-		if (!idNetInst.authorized && ID != null) {
+	{				
+		//window.idAsyncInit = function() {
+			console.log("asyncInit");
+			console.log(ID);
 			console.log("Init set" + appid_);
 			ID.init({
 				appId : appid_
@@ -140,11 +136,13 @@ cr.plugins_.IDNet = function(runtime)
 			ID.Event.subscribe("id.init",function() {
 				console.log("id.init event");
 				console.log("ID.initializeComplete");
+				ID.GameAPI.init(appid_, null, function(data, response) {
+					console.log(response);
+				});
 			});
-			ID.GameAPI.init(appid_, null, function(data, response) {
-				console.log(response);
-			});
-		}
+			
+			idNetInst.authorized = true;
+		//}
 	};
 	
 	Acts.prototype.RegisterPopup = function ()
