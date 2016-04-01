@@ -47,6 +47,9 @@ AddCondition(1, cf_none, "Is not authorized", "User", "Is not authorized", "True
 AddCondition(2, cf_none, "Is user authorized", "User", "Is user authorized", "True if user is authorized", "UserIsAuthorized");
 AddCondition(3, cf_none, "Is user not authorized", "User", "Is user not authorized", "True if user is not authorized", "UserIsNotAuthorized");
 
+AddCondition(4, cf_none, "Check is domaine on blacklist", "Protection and sponsor API", "Check is domaine on blacklist", "True if domain in blacklist", "isBlacklisted");
+AddCondition(5, cf_none, "Check is domaine on sponsorlist", "Protection and sponsor API", "Check is domaine on sponsorlist", "True if domain in sponsor list", "isSponsor");
+
 ////////////////////////////////////////
 // Actions
 
@@ -118,6 +121,7 @@ AddAction(12, 0, "CheckIsSponsor", "Protection and sponsor API", "Check is domai
 AddExpression(0, ef_return_string, "User name", "User", "UserName", "Return the current user's name, or a guest name if not logged in.");
 AddExpression(1, ef_return_string, "Session Key", "User", "SessionKey", "Return session key");
 AddExpression(2, ef_return_string, "User data", "Saves", "GateOnlineSavesData", "Return user data of online saves");
+
 
 AddExpression(3, ef_return_number, "Get is blacklisted", "Protection and sponsor API", "GetIsBlacklisted", "Return is blacklisted");
 AddExpression(4, ef_return_number, "Get is sponsor", "Protection and sponsor API", "GetIsSponsor", "Return get is sponsor");

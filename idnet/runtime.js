@@ -118,6 +118,16 @@ cr.plugins_.IDNet = function(runtime)
 		return !idNetInst.userAuthorized;
 	};
 	
+	Cnds.prototype.blacklisted = function ()
+	{
+		return idNetInst.isBlacklisted;
+	};
+	
+	Cnds.prototype.sponsored = function ()
+	{
+		return idNetInst.isSponsor;
+	};
+	
 	pluginProto.cnds = new Cnds();
 	
 	//////////////////////////////////////
@@ -294,12 +304,20 @@ cr.plugins_.IDNet = function(runtime)
 	
 	Exps.prototype.GetIsBlacklisted = function (ret)
 	{
-		ret.set_int(idNetInst.isBlacklisted);
+		if(idNetInst.isBlacklisted) {
+			ret.set_int(1);
+		} else {
+			ret.set_int(0);
+		}
 	};
 	
 	Exps.prototype.GetIsSponsor = function (ret)
 	{
-		ret.set_int(idNetInst.isSponsor);
+		if(idNetInst.isSponsor) {
+			ret.set_int(1);
+		} else {
+			ret.set_int(0);
+		}
 	};
 	
 	pluginProto.exps = new Exps();
