@@ -56,6 +56,11 @@ cr.plugins_.IDNet = function(runtime)
 		this._document = window.document;
 		this._unsafeWindow = this._document.defaultView;
 		
+		/*window.idnet_autologin = function(response){
+			console.log("IDNet.autologin");
+			//idNetInst.userAuthorized = true;
+		}*/
+		
         var fjs = document.head.getElementsByTagName('script')[0];
         if (document.getElementById('id-jssdk')) {return;}
         var js = document.createElement('script');
@@ -140,15 +145,26 @@ cr.plugins_.IDNet = function(runtime)
 			console.log("asyncInit");
 			console.log(ID);
 			console.log("Init set" + appid_);
-			ID.init({
-				appId : appid_
-			});
 			ID.Event.subscribe("id.init",function() {
 				console.log("id.init event");
 				console.log("ID.initializeComplete");
 				ID.GameAPI.init(appid_, null, function(data, response) {
 					console.log(response);
 				});
+				
+				ID.Protection.isBlacklisted(function(blacklisted){
+					console.log("ID.isBlacklisted "+blacklisted);
+					idNetInst.isBlacklisted = blacklisted;
+				});
+				
+				ID.Protection.isSponsor(function(sponsor){
+					console.log("ID.isSponsor "+sponsor);
+					idNetInst.isSponsor = sponsor;
+				});
+			});
+			
+			ID.init({
+				appId : appid_
 			});
 			
 			idNetInst.authorized = true;
@@ -269,14 +285,14 @@ cr.plugins_.IDNet = function(runtime)
 	
 	Acts.prototype.CheckIsBlacklisted = function () {
 		ID.Protection.isBlacklisted(function(blacklisted){
-			console.log(blacklisted);
-			idNetInst.isBlacklisted = isBlacklisted;
+			console.log("CheckIsBlacklisted "+blacklisted);
+			idNetInst.isBlacklisted = blacklisted;
 		});
 	};
 	
 	Acts.prototype.CheckIsSponsor = function () {
 		ID.Protection.isSponsor(function(sponsor){
-			console.log(sponsor);
+			console.log("CheckIsSponsor "+sponsor);
 			idNetInst.isSponsor = sponsor;
 		});
 	};
