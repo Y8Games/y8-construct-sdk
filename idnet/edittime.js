@@ -47,8 +47,8 @@ AddCondition(1, cf_none, "Is not authorized", "User", "Is not authorized", "True
 AddCondition(2, cf_none, "Is user authorized", "User", "Is user authorized", "True if user is authorized", "UserIsAuthorized");
 AddCondition(3, cf_none, "Is user not authorized", "User", "Is user not authorized", "True if user is not authorized", "UserIsNotAuthorized");
 
-AddCondition(4, cf_none, "Check is domaine on blacklist", "Protection and sponsor API", "Check is domaine on blacklist", "True if domain in blacklist", "isBlacklisted");
-AddCondition(5, cf_none, "Check is domaine on sponsorlist", "Protection and sponsor API", "Check is domaine on sponsorlist", "True if domain in sponsor list", "isSponsor");
+AddCondition(4, cf_none, "isBlacklisted", "Protection and sponsor API", "isBlacklisted", "True if domain in blacklist", "blacklisted");
+AddCondition(5, cf_none, "isSponsor", "Protection and sponsor API", "isSponsor", "True if domain in sponsor list", "sponsored");
 
 ////////////////////////////////////////
 // Actions
