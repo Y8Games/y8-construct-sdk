@@ -178,8 +178,8 @@ cr.plugins_.IDNet = function(runtime)
 				if(response == null) {
 					//this.d.dispatch("auth.fail")
 				} else {
-					console.log("RegisterPopup user.nickname:"+response.user.nickname);
-					idNetInst.idnetUserName = response.user.nickname;
+					console.log("RegisterPopup user.nickname:"+response.authResponse.details.nickname);
+					idNetInst.idnetUserName = response.authResponse.details.nickname;
 					idNetInst.userAuthorized = true;
 					//this.d.dispatch("auth.complete");
 				}
@@ -188,14 +188,15 @@ cr.plugins_.IDNet = function(runtime)
 	
 	Acts.prototype.LoginPopup = function ()
 	{
-		console.log("LoginPopup "+idNetInst.authorized);
+		console.log("LoginPopup "+idNetInst.authorized+" "+ID);
 		if (idNetInst.authorized){
 			ID.login(function (response) {
+				//console.log(response);
 				if(response == null) {
 					//this.d.dispatch("auth.fail")
 				} else {
-					console.log("LoginPopup user.nickname:"+response.user.nickname);
-					idNetInst.idnetUserName = response.user.nickname;
+					console.log("LoginPopup user.nickname:"+response.authResponse.details.nickname);
+					idNetInst.idnetUserName = response.authResponse.details.nickname;
 					idNetInst.userAuthorized = true;
 					//this.d.dispatch("auth.complete");
 				}
