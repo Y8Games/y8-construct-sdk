@@ -214,6 +214,7 @@ cr.plugins_.IDNet = function(runtime)
 	Acts.prototype.SubmitScore = function (score_, table_, allowduplicates_, highest_, playername_)
 	{
 		if (idNetInst.authorized) {
+			console.log("SubmitScore playername:"+playername_);
 			 var score = {
 				table: table_,
 				points: score_,
@@ -310,8 +311,8 @@ cr.plugins_.IDNet = function(runtime)
 	
 	Exps.prototype.UserName = function (ret)
 	{
-		if(idnetUserName != undefined) {
-			ret.set_string(idnetUserName);
+		if(idNetInst.idnetUserName != undefined) {
+			ret.set_string(idNetInst.idnetUserName);
 		}
 	};
 	
