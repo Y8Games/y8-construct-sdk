@@ -178,6 +178,8 @@ cr.plugins_.IDNet = function(runtime)
 				if(response == null) {
 					//this.d.dispatch("auth.fail")
 				} else {
+					console.log("RegisterPopup user.nickname:"+response.user.nickname);
+					idNetInst.idnetUserName = response.user.nickname;
 					idNetInst.userAuthorized = true;
 					//this.d.dispatch("auth.complete");
 				}
@@ -192,6 +194,8 @@ cr.plugins_.IDNet = function(runtime)
 				if(response == null) {
 					//this.d.dispatch("auth.fail")
 				} else {
+					console.log("LoginPopup user.nickname:"+response.user.nickname);
+					idNetInst.idnetUserName = response.user.nickname;
 					idNetInst.userAuthorized = true;
 					//this.d.dispatch("auth.complete");
 				}
@@ -305,12 +309,16 @@ cr.plugins_.IDNet = function(runtime)
 	
 	Exps.prototype.UserName = function (ret)
 	{
-		ret.set_string(idNetInst.idnetUserName);
+		if(idnetUserName != undefined) {
+			ret.set_string(idnetUserName);
+		}
 	};
 	
 	Exps.prototype.SessionKey = function (ret)
 	{
-		ret.set_string(idNetInst.idnetSessionKey);
+		if(idnetSessionKey != undefined) {
+			ret.set_string(idnetSessionKey);
+		}
 	};
 	
 	Exps.prototype.GateOnlineSavesData = function (ret)
