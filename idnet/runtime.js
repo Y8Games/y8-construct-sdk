@@ -325,7 +325,7 @@ cr.plugins_.IDNet = function(runtime)
 	
 	Exps.prototype.GateOnlineSavesData = function (ret)
 	{
-		ret.set_string(idNetInst.onlineSavesData);
+		ret.set_string(String(idNetInst.onlineSavesData));
 	};
 	
 	Exps.prototype.GetIsBlacklisted = function (ret)
