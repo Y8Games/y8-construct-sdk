@@ -56,10 +56,11 @@ cr.plugins_.IDNet = function(runtime)
 		this._document = window.document;
 		this._unsafeWindow = this._document.defaultView;
 		
-		/*window.idnet_autologin = function(response){
+		window.idnet_autologin = function(response){
 			console.log("IDNet.autologin");
-			//idNetInst.userAuthorized = true;
-		}*/
+			idNetInst.idnetUserName = response.user.nickname;
+			idNetInst.userAuthorized = true;
+		}
 		
         var fjs = document.head.getElementsByTagName('script')[0];
         if (document.getElementById('id-jssdk')) {return;}
