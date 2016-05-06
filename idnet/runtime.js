@@ -162,6 +162,21 @@ cr.plugins_.IDNet = function(runtime)
 					console.log("ID.isSponsor "+sponsor);
 					idNetInst.isSponsor = sponsor;
 				});
+					
+				window.idnet_autologin = function(response){
+					if(response != null && response.user != null) {
+						console.log("IDNet.autologin");
+						idNetInst.idnetUserName = response.user.nickname;
+						idNetInst.userAuthorized = true;
+					}
+				}
+				
+				var fjs = document.head.getElementsByTagName('script')[0];
+				if (document.getElementById('id-autologin')) {return;}
+				var js = document.createElement('script');
+				js.id = 'id-autologin';
+				js.src = "https://www.id.net/api/user_data/autologin?app_id=" + appid_ + "&callback=window.idnet_autologin";
+				fjs.parentNode.insertBefore(js, fjs);
 			});
 			
 			ID.init({
