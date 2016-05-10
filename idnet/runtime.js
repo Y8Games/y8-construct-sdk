@@ -168,6 +168,8 @@ cr.plugins_.IDNet = function(runtime)
 						console.log("IDNet.autologin");
 						idNetInst.idnetUserName = response.user.nickname;
 						idNetInst.userAuthorized = true;
+						
+						ID.login(function (response) {});
 					}
 				}
 				
