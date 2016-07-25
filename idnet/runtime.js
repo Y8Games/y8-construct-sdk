@@ -55,19 +55,6 @@ cr.plugins_.IDNet = function(runtime)
 		idNetInst = this;
 		this._document = window.document;
 		this._unsafeWindow = this._document.defaultView;
-		
-		window.idnet_autologin = function(response){
-			console.log("IDNet.autologin");
-			idNetInst.idnetUserName = response.user.nickname;
-			idNetInst.userAuthorized = true;
-		}
-		
-        var fjs = document.head.getElementsByTagName('script')[0];
-        if (document.getElementById('id-jssdk')) {return;}
-        var js = document.createElement('script');
-		js.id = 'id-jssdk';
-        js.src =  document.location.protocol == 'https:' ? "https://scdn.id.net/api/sdk.js" : "http://cdn.id.net/api/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
 	};
 	
 	function ShowLeaderBoardCallback(response) {
@@ -141,7 +128,34 @@ cr.plugins_.IDNet = function(runtime)
 	function Acts() {};
 	
 	Acts.prototype.Init = function (appid_)
-	{				
+	{	
+		window.idnet_autologin = function(response){
+			console.log("IDNet.autologin");
+			idNetInst.idnetUserName = response.user.nickname;
+			idNetInst.userAuthorized = true;
+		}
+		
+        var fjs = document.head.getElementsByTagName('script')[0];
+        if (document.getElementById('id-jssdk')) {
+			var js = document.getElementById('id-jssdk');
+		} else {
+			var js = document.createElement('script');
+			js.id = 'id-jssdk';
+			js.src =  document.location.protocol == 'https:' ? "https://scdn.id.net/api/sdk.js" : "http://cdn.id.net/api/sdk.js";
+			fjs.parentNode.insertBefore(js, fjs);
+		}
+		
+		if (document.getElementById('id-autologin')) {
+			var js_auto = document.getElementById('id-autologin');
+		} else {
+			var js_auto = document.createElement('script');
+			js_auto.id = 'id-autologin';
+			js_auto.src = "https://www.id.net/api/user_data/autologin?app_id=" + appid_ + "&callback=window.idnet_autologin";
+			fjs.parentNode.insertBefore(js_auto, fjs);
+		}
+		
+		
+		js.onload = function() {
 		//window.idAsyncInit = function() {
 			console.log("asyncInit");
 			console.log(ID);
@@ -172,13 +186,6 @@ cr.plugins_.IDNet = function(runtime)
 						ID.login(function (response) {});
 					}
 				}
-				
-				var fjs = document.head.getElementsByTagName('script')[0];
-				if (document.getElementById('id-autologin')) {return;}
-				var js = document.createElement('script');
-				js.id = 'id-autologin';
-				js.src = "https://www.id.net/api/user_data/autologin?app_id=" + appid_ + "&callback=window.idnet_autologin";
-				fjs.parentNode.insertBefore(js, fjs);
 			});
 			
 			ID.init({
@@ -186,7 +193,7 @@ cr.plugins_.IDNet = function(runtime)
 			});
 			
 			idNetInst.authorized = true;
-		//}
+		}
 	};
 	
 	Acts.prototype.RegisterPopup = function ()
