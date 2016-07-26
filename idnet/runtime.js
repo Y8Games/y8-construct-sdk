@@ -133,30 +133,10 @@ cr.plugins_.IDNet = function(runtime)
 			console.log("IDNet.autologin");
 			idNetInst.idnetUserName = response.user.nickname;
 			idNetInst.userAuthorized = true;
-		}
+		}	
 		
-        var fjs = document.head.getElementsByTagName('script')[0];
-        if (document.getElementById('id-jssdk')) {
-			var js = document.getElementById('id-jssdk');
-		} else {
-			var js = document.createElement('script');
-			js.id = 'id-jssdk';
-			js.src =  document.location.protocol == 'https:' ? "https://scdn.id.net/api/sdk.js" : "http://cdn.id.net/api/sdk.js";
-			fjs.parentNode.insertBefore(js, fjs);
-		}
-		
-		if (document.getElementById('id-autologin')) {
-			var js_auto = document.getElementById('id-autologin');
-		} else {
-			var js_auto = document.createElement('script');
-			js_auto.id = 'id-autologin';
-			js_auto.src = "https://www.id.net/api/user_data/autologin?app_id=" + appid_ + "&callback=window.idnet_autologin";
-			fjs.parentNode.insertBefore(js_auto, fjs);
-		}
-		
-		
-		js.onload = function() {
-		//window.idAsyncInit = function() {
+		//js.onload = function() {
+		window.idAsyncInit = function() {
 			console.log("asyncInit");
 			console.log(ID);
 			console.log("Init set" + appid_);
@@ -193,6 +173,25 @@ cr.plugins_.IDNet = function(runtime)
 			});
 			
 			idNetInst.authorized = true;
+		}
+		
+        var fjs = document.head.getElementsByTagName('script')[0];
+        if (document.getElementById('id-jssdk')) {
+			var js = document.getElementById('id-jssdk');
+		} else {
+			var js = document.createElement('script');
+			js.id = 'id-jssdk';
+			js.src =  document.location.protocol == 'https:' ? "https://scdn.id.net/api/sdk.js" : "http://cdn.id.net/api/sdk.js";
+			fjs.parentNode.insertBefore(js, fjs);
+		}
+		
+		if (document.getElementById('id-autologin')) {
+			var js_auto = document.getElementById('id-autologin');
+		} else {
+			var js_auto = document.createElement('script');
+			js_auto.id = 'id-autologin';
+			js_auto.src = "https://www.id.net/api/user_data/autologin?app_id=" + appid_ + "&callback=window.idnet_autologin";
+			fjs.parentNode.insertBefore(js_auto, fjs);
 		}
 	};
 	
