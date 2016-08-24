@@ -65,15 +65,6 @@ cr.plugins_.IDNet = function(runtime)
 			js.src =  document.location.protocol == 'https:' ? "https://scdn.id.net/api/sdk.js" : "http://cdn.id.net/api/sdk.js";
 			fjs.parentNode.insertBefore(js, fjs);
 		}
-		
-		if (document.getElementById('id-autologin')) {
-			var js_auto = document.getElementById('id-autologin');
-		} else {
-			var js_auto = document.createElement('script');
-			js_auto.id = 'id-autologin';
-			js_auto.src = "https://www.id.net/api/user_data/autologin?app_id=" + appid_ + "&callback=window.idnet_autologin";
-			fjs.parentNode.insertBefore(js_auto, fjs);
-		}
 	};
 	
 	function ShowLeaderBoardCallback(response) {
