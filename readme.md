@@ -1,5 +1,7 @@
 ## id.net Construct 2 Plugin
 
+The id.net C2 plugin offers cross site logins, acheivements, high scores, screenshots, and cloud saves. Use it to enable fun features inside your game, it's free.
+
 ### Install
 1. Download and unzip this repository
 2. Copy the idnet folder to the C2 plugins folder <install path>\exporters\html5\plugins
@@ -7,17 +9,20 @@
 
 ### Getting Started
 - Double click in a layout tab to open insert dialog
-- Add the IDNet plugin from the platform specific section
+- Add the id.net plugin from the platform specific section
 - Now id.net events should be available in the event tabs
-- Start by making a id.net _init_ action for _On start of layout_ event
+- Start by making the first event. Under system, choose on loader layout complete
+- Next, add the action _init_ from the id.net initialize section
+- Now the id.net plugin is ready to use.
 
-### Available Functions
-- Is authorized - Returns true if sdk is loaded
-- Is not authorized - Returns true if sdk is not loaded
-- Init - Initialisation of id.net API
-- Registration - Show a dialog prompting the user to register an account
-- Login - Show a dialog prompting the user to login with an account
-- Submit statistic - Submit a high score
-- Show leaderboard - Show high score menu
-- User name - Return the current user's name, or a guest name if not logged in
-- Session Key - SessionKey", "Return session key
+### Events
+- Initialized - When id.net is ready to use
+- Logged In - Once a player has signed in
+- Not Logged In - Only when a guest is playing
+- isBlacklisted - When website is blocked
+- isSponsered - When the game is on the Y8 network
+
+### Need Help?
+
+Post on the awesome id.net developer forum
+https://forum.id.net/c/app-developers
