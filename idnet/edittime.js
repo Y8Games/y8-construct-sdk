@@ -72,7 +72,7 @@ AddStringParam("Table", "Table name");
 AddNumberParam("Allowduplicates", "Set to 1 if player’s can submit more than one score");
 AddNumberParam("Highest", "Table name");
 AddStringParam("Playername", "Set playername");
-AddAction(3, 0, "Submit score", "Scores", "Submit scores {0}", "Submit a player's score", "SubmitScore");
+AddAction(3, 0, "Submit score", "Statistics", "Submit scores {0}", "Submit a player's score", "SubmitScore");
 
 AddStringParam("Image", "Text to add to the shout box.");
 AddAction(4, 0, "Game Screenshot", "Post to profile", "Send image {0}", "Allow the user to post image to page", "SubmitProfileImage");
@@ -81,7 +81,7 @@ AddStringParam("Table", "Table name");
 AddStringParam("Mode", "Equals alltime, last30days, last7days, today, or newest.");
 AddNumberParam("Highest", " Set to 0 if a lower score is better.");
 AddNumberParam("Allowduplicates", "Set to 1 if player’s can have more than one score displayed.");
-AddAction(5, 0, "Show high scores", "Scores", "Show data leaderboard", "Show data leaderboard", "ShowLeaderBoard");
+AddAction(5, 0, "Show leaderboard", "Statistics", "Show data leaderboard", "Show data leaderboard", "ShowLeaderBoard");
 
 AddStringParam("AchievementTitle", "AchievementName");
 AddStringParam("AchievementKey", "AchievementKey");
