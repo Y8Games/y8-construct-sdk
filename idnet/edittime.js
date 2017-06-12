@@ -1,12 +1,12 @@
 ﻿function GetPluginSettings()
 {
 	return {
-		"name":			"id.net",			// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
+		"name":			"IDNet",			// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
 		"id":			"IDNet",			// this is used to identify this plugin and is saved to the project; never change it
-		"version":		"1.1",					// (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
-		"description":	"Connect your C2 game with id.net.",
-		"author":		"Y8/id.net",
-		"help url":		"https://github.com/webgroup-limited/id.net-construct-sdk",
+		"version":		"1.0",					// (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
+		"description":	"Integrate in your game IDNet sdk.",
+		"author":		"Scirra",
+		"help url":		"http://www.id.net",
 		"category":		"Platform specific",	// Prefer to re-use existing categories, but you can set anything here
 		"type":			"object",				// either "world" (appears in layout and is drawn), else "object"
 		"rotatable":	false,					// only used when "type" is "world".  Enables an angle property on the object.
@@ -41,14 +41,14 @@
 //				display_str,		// as appears in event sheet - use {0}, {1} for parameters and also <b></b>, <i></i>
 //				description,		// appears in event wizard dialog when selected
 //				script_name);		// corresponding runtime function name
+				
+AddCondition(0, cf_none, "Is authorized", "User", "Is authorized", "True if authorized (sdk is loaded)", "isAuthorized");
+AddCondition(1, cf_none, "Is not authorized", "User", "Is not authorized", "True if not authorized", "isNotAuthorized");
+AddCondition(2, cf_none, "Is user authorized", "User", "Is user authorized", "True if user is authorized", "UserIsAuthorized");
+AddCondition(3, cf_none, "Is user not authorized", "User", "Is user not authorized", "True if user is not authorized", "UserIsNotAuthorized");
 
-AddCondition(0, cf_none, "initialized", "Main", "Initialized", "id.net sdk is ready to use.", "initialized");			
-AddCondition(1, cf_none, "Logged In", "Main", "Is user authorized", "Active when the player is signed in", "UserIsAuthorized");
-AddCondition(2, cf_none, "Not Logged In", "Main", "Is user not authorized", "Active when the player is a guest", "UserIsNotAuthorized");
-
-AddCondition(3, cf_none, "isBlacklisted", "Protection and sponsor API", "isBlacklisted", "True if domain in blacklist", "blacklisted");
-AddCondition(4, cf_none, "isSponsor", "Protection and sponsor API", "isSponsor", "True if domain in sponsor list", "sponsored");
-
+AddCondition(4, cf_none, "isBlacklisted", "Protection and sponsor API", "isBlacklisted", "True if domain in blacklist", "blacklisted");
+AddCondition(5, cf_none, "isSponsor", "Protection and sponsor API", "isSponsor", "True if domain in sponsor list", "sponsored");
 
 ////////////////////////////////////////
 // Actions
@@ -62,26 +62,26 @@ AddCondition(4, cf_none, "isSponsor", "Protection and sponsor API", "isSponsor",
 //			 script_name);		// corresponding runtime function name
 
 AddStringParam("Appid", "appId");
-AddAction(0, 0, "Init", "Initialize", "Init", "Initialisation of Idnet", "Init");
+AddAction(0, 0, "Init", "Init", "Init", "Initialisation of Idnet", "Init");
 
-AddAction(1, 0, "Registration", "User", "Show registration menu", "Sho", "RegisterPopup");
-AddAction(2, 0, "Login", "User", "Show login box", "Show login menu", "LoginPopup");
+AddAction(1, 0, "Show registration box", "User", "Show registration box", "Show a dialog prompting the user to register an account.", "RegisterPopup");
+AddAction(2, 0, "Show login box", "User", "Show login box", "Show a dialog prompting the user to login an account.", "LoginPopup");
 
 AddNumberParam("Score", "The value to submit for the statistic.  Must be a positive integer.");
 AddStringParam("Table", "Table name");
-AddNumberParam("Allowduplicates", "Set to 1 if player’s can submit more than one score");
+AddNumberParam("Allowduplicates", "Set to 1 if player’s can submit more than one score.");
 AddNumberParam("Highest", "Table name");
 AddStringParam("Playername", "Set playername");
-AddAction(3, 0, "Submit score", "Scores", "Submit scores {0}", "Submit a player's score", "SubmitScore");
+AddAction(3, 0, "Submit statistic", "Statistics", "Submit scores {0}", "Submit a statistic to the IDNet statistics system.", "SubmitScore");
 
 AddStringParam("Image", "Text to add to the shout box.");
-AddAction(4, 0, "Game Screenshot", "Post to profile", "Send image {0}", "Allow the user to post image to page", "SubmitProfileImage");
+AddAction(4, 0, "Send image to profile", "Post to profile", "Send image {0}", "Allow the user to post image to page", "SubmitProfileImage");
 
 AddStringParam("Table", "Table name");
 AddStringParam("Mode", "Equals alltime, last30days, last7days, today, or newest.");
 AddNumberParam("Highest", " Set to 0 if a lower score is better.");
 AddNumberParam("Allowduplicates", "Set to 1 if player’s can have more than one score displayed.");
-AddAction(5, 0, "Show high scores", "Scores", "Show data leaderboard", "Show data leaderboard", "ShowLeaderBoard");
+AddAction(5, 0, "Show leaderboard", "Statistics", "Show data leaderboard", "Show data leaderboard", "ShowLeaderBoard");
 
 AddStringParam("AchievementTitle", "AchievementName");
 AddStringParam("AchievementKey", "AchievementKey");
@@ -102,10 +102,8 @@ AddStringParam("Key", "Key");
 AddAction(10, 0, "Remove user data", "Saves", "Remove data from online saves with title {0}", "Remove user data", "OnlineSavesRemove");
 
 
-AddAction(11, 0, "CheckIsBlacklisted", "Protection/sponsor", "Check is domaine on blacklist", "Check is domaine on blacklist", "CheckIsBlacklisted");
-AddAction(12, 0, "CheckIsSponsor", "PProtection/sponsor", "Check is domaine on sponsorlist", "Check is domaine on sponsorlist", "CheckIsSponsor");
-
-AddAction(13, 0, "Auto Login", "User", "Auto Login", "Will try to automatically login a player", "autoLogin");
+AddAction(11, 0, "CheckIsBlacklisted", "Protection and sponsor API", "Check is domaine on blacklist", "Check is domaine on blacklist", "CheckIsBlacklisted");
+AddAction(12, 0, "CheckIsSponsor", "Protection and sponsor API", "Check is domaine on sponsorlist", "Check is domaine on sponsorlist", "CheckIsSponsor");
 
 
 ////////////////////////////////////////
@@ -120,7 +118,7 @@ AddAction(13, 0, "Auto Login", "User", "Auto Login", "Will try to automatically 
 //				 description);	// description in expressions panel
 
 // example
-AddExpression(0, ef_return_string, "User name", "User", "UserName", "Get the player's name");
+AddExpression(0, ef_return_string, "User name", "User", "UserName", "Return the current user's name, or a guest name if not logged in.");
 AddExpression(1, ef_return_string, "Session Key", "User", "SessionKey", "Return session key");
 AddExpression(2, ef_return_string, "User data", "Saves", "GateOnlineSavesData", "Return user data of online saves");
 
