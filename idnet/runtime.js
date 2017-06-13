@@ -137,22 +137,17 @@ cr.plugins_.IDNet = function(runtime)
 	// Actions
 	function Acts() {};
 	
-	Acts.prototype.Init = function (appid_)
-	{	
+	Acts.prototype.Init = function(appid_) {	
 		window.idnet_autologin = function(response){
-			console.log("IDNet.autologin");
+			console.log("id.net autologin");
 			idNetInst.idnetUserName = response.user.nickname;
 			idNetInst.userAuthorized = true;
 		}	
 		
 		//js.onload = function() {
 		window.idAsyncInit = function() {
-			console.log("asyncInit");
-			console.log(ID);
-			console.log("Init set" + appid_);
 			ID.Event.subscribe("id.init",function() {
-				console.log("id.init event");
-				console.log("ID.initializeComplete");
+				console.log("id.net initialized");
 				ID.GameAPI.init(appid_, null, function(data, response) {
 					console.log(response);
 				});
@@ -169,7 +164,7 @@ cr.plugins_.IDNet = function(runtime)
 					
 				window.idnet_autologin = function(response){
 					if(response != null && response.user != null) {
-						console.log("IDNet.autologin");
+						console.log("Id.net autologin");
 						idNetInst.idnetUserName = response.user.nickname;
 						idNetInst.userAuthorized = true;
 						
@@ -205,8 +200,7 @@ cr.plugins_.IDNet = function(runtime)
 		}
 	};
 	
-	Acts.prototype.RegisterPopup = function ()
-	{
+	Acts.prototype.RegisterPopup = function() {
 		if (idNetInst.authorized)
 			ID.register(function (response) {
 				if(response == null) {
@@ -220,8 +214,7 @@ cr.plugins_.IDNet = function(runtime)
 			});
 	};
 	
-	Acts.prototype.LoginPopup = function ()
-	{
+	Acts.prototype.LoginPopup = function() {
 		console.log("LoginPopup "+idNetInst.authorized+" "+ID);
 		if (idNetInst.authorized){
 			ID.login(function (response) {
@@ -238,15 +231,13 @@ cr.plugins_.IDNet = function(runtime)
 		}
 	};
 	
-	Acts.prototype.ShowLeaderBoard = function (table_, mode_, highest_, allowduplicates_)
-	{
+	Acts.prototype.ShowLeaderBoard = function(table_, mode_, highest_, allowduplicates_) {
 		if (idNetInst.authorized) {
 			ID.GameAPI.Leaderboards.list({table:table_, mode: mode_, highest: highest_, allowduplicates: allowduplicates_});
 		}
 	};
 	
-	Acts.prototype.SubmitScore = function (score_, table_, allowduplicates_, highest_, playername_)
-	{
+	Acts.prototype.SubmitScore = function(score_, table_, allowduplicates_, highest_, playername_) {
 		if (idNetInst.authorized) {
 			console.log("SubmitScore playername:"+playername_);
 			 var score = {
@@ -262,16 +253,14 @@ cr.plugins_.IDNet = function(runtime)
 		}
 	};
 	
-	Acts.prototype.SubmitProfileImage = function (image_)
-	{
+	Acts.prototype.SubmitProfileImage = function(image_) {
 		if (idNetInst.authorized)
 			ID.submit_image(image_, function(response){
 				//console.log(response);
 			});
 	};
 	
-	Acts.prototype.AchievementSave = function (achievementTitle_, achievementKey_, overwrite_, allowduplicates_)
-	{
+	Acts.prototype.AchievementSave = function(achievementTitle_, achievementKey_, overwrite_, allowduplicates_) {
 		if (idNetInst.authorized) {
 			var achievementData = {
 			  achievement: achievementTitle_,
@@ -286,15 +275,13 @@ cr.plugins_.IDNet = function(runtime)
 		}
 	};
 	
-	Acts.prototype.ShowAchievements = function ()
-	{
+	Acts.prototype.ShowAchievements = function() {
 		if (idNetInst.authorized) {
 			ID.GameAPI.Achievements.list();
 		}
 	};
 	
-	Acts.prototype.OnlineSavesSave = function (key_, value_)
-	{
+	Acts.prototype.OnlineSavesSave = function(key_, value_) {
 		if (idNetInst.authorized) {
 			ID.api('user_data/submit', 'POST', {key: key_, value: value_}, function(response){
 				//console.log(response);
@@ -302,8 +289,7 @@ cr.plugins_.IDNet = function(runtime)
 		}
 	};
 	
-	Acts.prototype.OnlineSavesRemove = function (key_)
-	{
+	Acts.prototype.OnlineSavesRemove = function(key_) {
 		if (idNetInst.authorized) {
 			ID.api('user_data/remove', 'POST', {key: key_}, function(response){
 				//console.log(response);
@@ -311,12 +297,11 @@ cr.plugins_.IDNet = function(runtime)
 		}
 	};
 	
-	Acts.prototype.OnlineSavesLoad = function (key_)
-	{
+	Acts.prototype.OnlineSavesLoad = function(key_) {
 		if (idNetInst.authorized) {
 			idNetInst.onlineSavesData = null;
 			ID.api('user_data/retrieve', 'POST', {key: key_}, function(response){
-				if(response != null) {
+				if(response) {
 					idNetInst.onlineSavesData = response.jsondata;
 				}
 			});
@@ -343,27 +328,23 @@ cr.plugins_.IDNet = function(runtime)
 	// Expressions
 	function Exps() {};
 	
-	Exps.prototype.UserName = function (ret)
-	{
+	Exps.prototype.UserName = function(ret) {
 		if(idNetInst.idnetUserName != undefined) {
 			ret.set_string(idNetInst.idnetUserName);
 		}
 	};
 	
-	Exps.prototype.SessionKey = function (ret)
-	{
+	Exps.prototype.SessionKey = function(ret) {
 		if(idnetSessionKey != undefined) {
 			ret.set_string(idnetSessionKey);
 		}
 	};
 	
-	Exps.prototype.GateOnlineSavesData = function (ret)
-	{
+	Exps.prototype.GateOnlineSavesData = function (ret) {
 		ret.set_string(String(idNetInst.onlineSavesData));
 	};
 	
-	Exps.prototype.GetIsBlacklisted = function (ret)
-	{
+	Exps.prototype.GetIsBlacklisted = function(ret) {
 		if(idNetInst.isBlacklisted) {
 			ret.set_int(1);
 		} else {
@@ -371,8 +352,7 @@ cr.plugins_.IDNet = function(runtime)
 		}
 	};
 	
-	Exps.prototype.GetIsSponsor = function (ret)
-	{
+	Exps.prototype.GetIsSponsor = function(ret) {
 		if(idNetInst.isSponsor) {
 			ret.set_int(1);
 		} else {
