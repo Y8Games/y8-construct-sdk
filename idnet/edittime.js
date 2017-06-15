@@ -3,7 +3,7 @@
 	return {
 		"name":			"id.net",			// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
 		"id":			"IDNet",			// this is used to identify this plugin and is saved to the project; never change it
-		"version":		"1.2",					// (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
+		"version":		"1.3",					// (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
 		"description":	"Connect your C2 game with id.net.",
 		"author":		"id.net and Y8.com",
 		"help url":		"https://github.com/webgroup-limited/id.net-construct-sdk",
@@ -44,8 +44,8 @@
 				
 AddCondition(0, cf_none, "initialized", "Main", "Initialized", "id.net sdk is ready to use.", "isAuthorized");		
 AddCondition(1, cf_none, "Not initialized", "Main", "Not Initialized", "id.net is not ready to use", "isNotAuthorized");
-AddCondition(2, cf_none, "Logged In", "Main", "Is user authorized", "Active when the player is signed in", "UserIsAuthorized");
-AddCondition(3, cf_none, "Not Logged In", "Main", "Is user not authorized", "Active when the player is a guest", "UserIsNotAuthorized");
+AddCondition(2, cf_none, "Logged In", "Main", "Logged in", "Active when the player is signed in", "UserIsAuthorized");
+AddCondition(3, cf_none, "Not Logged In", "Main", "Not logged in", "Active when the player is a guest", "UserIsNotAuthorized");
 
 AddCondition(4, cf_none, "isBlacklisted", "Protection and sponsor API", "isBlacklisted", "True if domain in blacklist", "blacklisted");
 AddCondition(5, cf_none, "isSponsor", "Protection and sponsor API", "isSponsor", "True if domain in sponsor list", "sponsored");
@@ -62,7 +62,7 @@ AddCondition(5, cf_none, "isSponsor", "Protection and sponsor API", "isSponsor",
 //			 script_name);		// corresponding runtime function name
 
 AddStringParam("Appid", "appId");
-AddAction(0, 0, "Init", "Init", "Init", "Initialisation of id.net", "Init");
+AddAction(0, 0, "Init", "Main", "Init", "Initialisation of id.net", "Init");
 
 AddAction(1, 0, "Registration", "User", "Show registration menu", "Show registration menu", "RegisterPopup");
 AddAction(2, 0, "Login", "User", "Show login menu", "Shows login menu", "LoginPopup");
@@ -75,7 +75,7 @@ AddStringParam("Playername", "Set playername");
 AddAction(3, 0, "Submit score", "scores", "Submit scores {0}", "Submit a player's score", "SubmitScore");
 
 AddStringParam("Image", "Text to add to the shout box.");
-AddAction(4, 0, "Send image to profile", "Post to profile", "Send image {0}", "Allow the user to post image to page", "SubmitProfileImage");
+AddAction(4, 0, "Send image to profile", "User", "Send image {0}", "Allow the user to post image to page", "SubmitProfileImage");
 
 AddStringParam("Table", "Table name");
 AddStringParam("Mode", "Equals alltime, last30days, last7days, today, or newest.");
@@ -93,18 +93,19 @@ AddAction(7, 0, "Show achievements", "Achievements", "Show achievements", "Show 
 
 AddStringParam("Key", "Key");
 AddStringParam("Value", "Value");
-AddAction(8, 0, "Save user data", "Saves", "Save data to online saves with title {0} and value {1}", "Save user data", "OnlineSavesSave");
+AddAction(8, 0, "Save user data", "User", "Save data to online saves with title {0} and value {1}", "Save user data", "OnlineSavesSave");
 
 AddStringParam("Key", "Key");
-AddAction(9, 0, "Load user data", "Saves", "Load data from online saves with title {0}", "Load user data", "OnlineSavesLoad");
+AddAction(9, 0, "Load user data", "User", "Load data from online saves with title {0}", "Load user data", "OnlineSavesLoad");
 
 AddStringParam("Key", "Key");
-AddAction(10, 0, "Remove user data", "Saves", "Remove data from online saves with title {0}", "Remove user data", "OnlineSavesRemove");
+AddAction(10, 0, "Remove user data", "User", "Remove data from online saves with title {0}", "Remove user data", "OnlineSavesRemove");
+
+AddAction(11, 0, "CheckIsBlacklisted", "Protection", "Check is domaine on blacklist", "Check is domaine on blacklist", "CheckIsBlacklisted");
+AddAction(12, 0, "CheckIsSponsor", "Protection", "Check is domaine on sponsorlist", "Check is domaine on sponsorlist", "CheckIsSponsor");
 
 
-AddAction(11, 0, "CheckIsBlacklisted", "Protection and sponsor API", "Check is domaine on blacklist", "Check is domaine on blacklist", "CheckIsBlacklisted");
-AddAction(12, 0, "CheckIsSponsor", "Protection and sponsor API", "Check is domaine on sponsorlist", "Check is domaine on sponsorlist", "CheckIsSponsor");
-
+AddAction(13, 0, "Enable Logs", "Main", "Enable Logs", "Add logs to the browser console", "debug");
 
 ////////////////////////////////////////
 // Expressions
