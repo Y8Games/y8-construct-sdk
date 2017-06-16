@@ -1,4 +1,4 @@
-﻿// ECMAScript 5 strict mode
+// ECMAScript 5 strict mode
 "use strict";
 
 assert2(cr, "cr namespace not created");
@@ -51,16 +51,6 @@ cr.plugins_.IDNet = function(runtime) {
 		idNetInst = this;
 		this._document = window.document;
 		this._unsafeWindow = this._document.defaultView;
-		
-		var fjs = document.head.getElementsByTagName('script')[0];
-        if (document.getElementById('id-jssdk')) {
-			var js = document.getElementById('id-jssdk');
-		} else {
-			var js = document.createElement('script');
-			js.id = 'id-jssdk';
-			js.src =  document.location.protocol == 'https:' ? "https://scdn.id.net/api/sdk.js" : "http://cdn.id.net/api/sdk.js";
-			fjs.parentNode.insertBefore(js, fjs);
-		}
 	};
 	
 	function ShowLeaderBoardCallback(response) {
@@ -133,15 +123,41 @@ cr.plugins_.IDNet = function(runtime) {
 	// Actions
 	function Acts() {};
 	
-	Acts.prototype.Init = function(appid_) {	
-		window.idnet_autologin = function(response) {
-			idNetInst.idnetUserName = response.user.nickname;
-			idNetInst.userAuthorized = true;
-		}	
-		
-		//js.onload = function() {
+	Acts.prototype.Inititalize = function(appid_) {	
+		console.log('init with appid ' + appid_);
+
+		(function(d, s, id){
+	        var js, fjs = d.getElementsByTagName(s)[0];
+	        if (d.getElementById(id)) {return;}
+	        js = d.createElement(s); js.id = id;
+	        js.src =  document.location.protocol == 'https:' ? "https://scdn.id.net/api/sdk.js" : "http://cdn.id.net/api/sdk.js";
+	        fjs.parentNode.insertBefore(js, fjs);
+	    }(document, 'script', 'id-jssdk'));
+
 		window.idAsyncInit = function() {
 			ID.Event.subscribe("id.init",function() {
+				window.idnet_autologin = function(response) {
+					if (response != null && response.user != null) {
+						if (idNetInst.debug) {
+							console.log("id.net autologin");
+						}
+						idNetInst.idnetUserName = response.user.nickname;
+						idNetInst.userAuthorized = true;
+						ID.login(function(response) {});
+					}
+				}
+
+				var fjs = document.head.getElementsByTagName('meta')[0];
+				if (document.getElementById('id-autologin')) {
+					var js_auto = document.getElementById('id-autologin');
+				} else {
+					var js_auto = document.createElement('script');
+					js_auto.id = 'id-autologin';
+					js_auto.src = "https://www.id.net/api/user_data/autologin?app_id=" + appid_ + "&callback=window.idnet_autologin";
+					fjs.parentNode.insertBefore(js_auto, fjs);
+				}
+
+
 				if (idNetInst.debug) {
 					console.log("id.net initialized");
 				}
@@ -153,17 +169,6 @@ cr.plugins_.IDNet = function(runtime) {
 				ID.Protection.isSponsor(function(sponsor) {
 					idNetInst.isSponsor = sponsor;
 				});
-					
-				window.idnet_autologin = function(response) {
-					if (response != null && response.user != null) {
-						if (idNetInst.debug) {
-							console.log("id.net autologin");
-						}
-						idNetInst.idnetUserName = response.user.nickname;
-						idNetInst.userAuthorized = true;
-						ID.login(function(response) {});
-					}
-				}
 			});
 			
 			ID.init({
@@ -171,25 +176,6 @@ cr.plugins_.IDNet = function(runtime) {
 			});
 			
 			idNetInst.authorized = true;
-		}
-		
-        var fjs = document.head.getElementsByTagName('script')[0];
-        if (document.getElementById('id-jssdk')) {
-			var js = document.getElementById('id-jssdk');
-		} else {
-			var js = document.createElement('script');
-			js.id = 'id-jssdk';
-			js.src =  document.location.protocol == 'https:' ? "https://scdn.id.net/api/sdk.js" : "http://cdn.id.net/api/sdk.js";
-			fjs.parentNode.insertBefore(js, fjs);
-		}
-		
-		if (document.getElementById('id-autologin')) {
-			var js_auto = document.getElementById('id-autologin');
-		} else {
-			var js_auto = document.createElement('script');
-			js_auto.id = 'id-autologin';
-			js_auto.src = "https://www.id.net/api/user_data/autologin?app_id=" + appid_ + "&callback=window.idnet_autologin";
-			fjs.parentNode.insertBefore(js_auto, fjs);
 		}
 	};
 
@@ -314,7 +300,6 @@ cr.plugins_.IDNet = function(runtime) {
 	
 	Acts.prototype.OnlineSavesLoad = function(key_) {
 		if (idNetInst.authorized) {
-			idNetInst.onlineSavesData = null;
 			ID.api('user_data/retrieve', 'POST', {key: key_}, function(response) {
 				if(response) {
 					idNetInst.onlineSavesData = response.jsondata;

@@ -3,7 +3,7 @@
 	return {
 		"name":			"id.net",			// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
 		"id":			"IDNet",			// this is used to identify this plugin and is saved to the project; never change it
-		"version":		"1.3",					// (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
+		"version":		"1.4",					// (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
 		"description":	"Connect your C2 game with id.net.",
 		"author":		"id.net and Y8.com",
 		"help url":		"https://github.com/webgroup-limited/id.net-construct-sdk",
@@ -62,7 +62,7 @@ AddCondition(5, cf_none, "isSponsor", "Protection and sponsor API", "isSponsor",
 //			 script_name);		// corresponding runtime function name
 
 AddStringParam("Appid", "appId");
-AddAction(0, 0, "Init", "Main", "Init", "Initialisation of id.net", "Init");
+AddAction(0, 0, "Init", "Main", "Init", "Initialisation of id.net", "Inititalize");
 
 AddAction(1, 0, "Registration", "User", "Show registration menu", "Show registration menu", "RegisterPopup");
 AddAction(2, 0, "Login", "User", "Show login menu", "Shows login menu", "LoginPopup");
