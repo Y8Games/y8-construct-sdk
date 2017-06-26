@@ -1,9 +1,9 @@
-﻿function GetPluginSettings()
+function GetPluginSettings()
 {
 	return {
 		"name":			"id.net",			// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
 		"id":			"IDNet",			// this is used to identify this plugin and is saved to the project; never change it
-		"version":		"1.4",					// (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
+		"version":		"1.5",					// (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
 		"description":	"Connect your C2 game with id.net.",
 		"author":		"id.net and Y8.com",
 		"help url":		"https://github.com/webgroup-limited/id.net-construct-sdk",
@@ -69,24 +69,24 @@ AddAction(2, 0, "Login", "User", "Show login menu", "Shows login menu", "LoginPo
 
 AddNumberParam("Score", "The player's score value");
 AddStringParam("Table", "Table name");
-AddNumberParam("Allowduplicates", "Set to 1 if player’s can submit more than one score.");
-AddNumberParam("Highest", "Table name");
-AddStringParam("Playername", "Set playername");
+AddNumberParam("Allowduplicates", "Set to 1 if player’s can submit more than one score.", 0);
+AddNumberParam("Highest", "Table name", 1);
+AddStringParam("Playername (optional)", "Set playername");
 AddAction(3, 0, "Submit score", "scores", "Submit scores {0}", "Submit a player's score", "SubmitScore");
 
 AddStringParam("Image", "Text to add to the shout box.");
 AddAction(4, 0, "Send image to profile", "User", "Send image {0}", "Allow the user to post image to page", "SubmitProfileImage");
 
-AddStringParam("Table", "Table name");
-AddStringParam("Mode", "Equals alltime, last30days, last7days, today, or newest.");
-AddNumberParam("Highest", " Set to 0 if a lower score is better.");
-AddNumberParam("Allowduplicates", "Set to 1 if player’s can have more than one score displayed.");
+AddStringParam("Table", "The table name from id.net apps page");
+AddStringParam("Mode", "Equals alltime, last30days, last7days, today, or newest.", '"alltime"');
+AddNumberParam("Highest", " Set to 0 if a low score is better.", 1);
+AddNumberParam("Allowduplicates", "Set to 1 if player’s can have more than one score displayed.", 0);
 AddAction(5, 0, "Show leaderboard", "scores", "Show data leaderboard", "Show data leaderboard", "ShowLeaderBoard");
 
 AddStringParam("AchievementTitle", "AchievementName");
 AddStringParam("AchievementKey", "AchievementKey");
-AddStringParam("Overwrite", "Allow players to unlock the same achievement more than once.");
-AddStringParam("Allowduplicates", " Allow players to unlock the same achievement and display them seperatly.");
+AddNumberParam("Overwrite", "Allow players to unlock the same achievement more than once.", 0);
+AddNumberParam("Allowduplicates", " Allow players to unlock the same achievement and display them seperatly.", 0);
 AddAction(6, 0, "Save achievement", "Achievements", "Save achievement with title {0} and key {1}", "Save achievement", "AchievementSave");
 
 AddAction(7, 0, "Show achievements", "Achievements", "Show achievements", "Show achievements", "ShowAchievements");
@@ -103,9 +103,6 @@ AddAction(10, 0, "Remove user data", "User", "Remove data from online saves with
 
 AddAction(11, 0, "CheckIsBlacklisted", "Protection", "Check is domaine on blacklist", "Check is domaine on blacklist", "CheckIsBlacklisted");
 AddAction(12, 0, "CheckIsSponsor", "Protection", "Check is domaine on sponsorlist", "Check is domaine on sponsorlist", "CheckIsSponsor");
-
-
-AddAction(13, 0, "Enable Logs", "Main", "Enable Logs", "Add logs to the browser console", "debug");
 
 ////////////////////////////////////////
 // Expressions
