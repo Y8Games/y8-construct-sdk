@@ -11,6 +11,9 @@
 - Now id.net events should be available in the event tabs
 - Start by making a id.net _init_ action for _On start of layout_ event
 
+### Important Notes
+- Games will need to be hosted on https in order to work. Using https is possible using the id.net <a href="http://dev.id.net/docs/storage/">storage solution</a>. Any website, even non https ones, can iframe the game.
+
 ### Available Functions
 - Is authorized - Returns true if sdk is loaded
 - Is not authorized - Returns true if sdk is not loaded
