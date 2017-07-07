@@ -35,6 +35,7 @@ cr.plugins_.IDNet = function(runtime) {
 	var onlineSavesData = "";
 	var isBlacklisted = 0;
 	var isSponsor = 0;
+	var gotSaveData = 0;
 	
 	// called on startup for each object type
 	typeProto.onCreate = function() {
@@ -86,34 +87,35 @@ cr.plugins_.IDNet = function(runtime) {
 	// Conditions
 	function Cnds() {};
 	
-	Cnds.prototype.isAuthorized = function ()
-	{
+	Cnds.prototype.isAuthorized = function () {
 		return idNetInst.authorized;
 	};
 	
-	Cnds.prototype.isNotAuthorized = function ()
-	{
+	Cnds.prototype.isNotAuthorized = function () {
 		return !idNetInst.authorized;
 	};
 	
-	Cnds.prototype.UserIsAuthorized = function ()
-	{
+	Cnds.prototype.UserIsAuthorized = function () {
 		return idNetInst.userAuthorized;
 	};
 	
-	Cnds.prototype.UserIsNotAuthorized = function ()
-	{
+	Cnds.prototype.UserIsNotAuthorized = function () {
 		return !idNetInst.userAuthorized;
 	};
 	
-	Cnds.prototype.blacklisted = function ()
-	{
+	Cnds.prototype.blacklisted = function () {
 		return idNetInst.isBlacklisted;
 	};
 	
-	Cnds.prototype.sponsored = function ()
-	{
+	Cnds.prototype.sponsored = function () {
 		return idNetInst.isSponsor;
+	};
+
+	Cnds.prototype.dataReady = function () {
+		if (idNetInst.gotSaveData === 1) {
+			idNetInst.gotSaveData = 0;
+			return 1;
+		}
 	};
 	
 	pluginProto.cnds = new Cnds();
@@ -275,6 +277,7 @@ cr.plugins_.IDNet = function(runtime) {
 			ID.api('user_data/retrieve', 'POST', {key: key_}, function(response) {
 				if(response) {
 					idNetInst.onlineSavesData = response.jsondata;
+					idNetInst.gotSaveData = 1;
 					console.log("save loaded", response);
 				}
 			});
