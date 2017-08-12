@@ -117,6 +117,12 @@ cr.plugins_.IDNet = function(runtime) {
 			return 1;
 		}
 	};
+
+	Cnds.prototype.menuVisible = function() {
+		if (window.ID && ID.isVisible()) {
+			return 1;
+		}
+	};
 	
 	pluginProto.cnds = new Cnds();
 	

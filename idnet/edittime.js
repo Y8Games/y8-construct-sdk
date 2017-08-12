@@ -3,7 +3,7 @@ function GetPluginSettings()
 	return {
 		"name":			"id.net",			// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
 		"id":			"IDNet",			// this is used to identify this plugin and is saved to the project; never change it
-		"version":		"1.6",					// (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
+		"version":		"1.7",					// (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
 		"description":	"Connect your C2 game with id.net.",
 		"author":		"id.net and Y8.com",
 		"help url":		"https://github.com/webgroup-limited/id.net-construct-sdk",
@@ -50,7 +50,9 @@ AddCondition(3, cf_none, "Not Logged In", "Main", "Not logged in", "Active when 
 AddCondition(4, cf_none, "isBlacklisted", "Protection and sponsor API", "isBlacklisted", "True if domain in blacklist", "blacklisted");
 AddCondition(5, cf_none, "isSponsor", "Protection and sponsor API", "isSponsor", "True if domain in sponsor list", "sponsored");
 
-AddCondition(6, cf_none, "player data loaded", "User", "player data loaded", "Fires once when any player data has finished downloading.", "dataReady");
+AddCondition(6, cf_none, "Player data loaded", "User", "player data loaded", "Fires once when any player data has finished downloading.", "dataReady");
+
+AddCondition(7, cf_none, "Menu is visible", "Main", "Menu is visible", "Running when the id.net menu is open", "menuVisible");
 
 ////////////////////////////////////////
 // Actions

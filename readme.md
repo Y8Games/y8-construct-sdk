@@ -28,6 +28,7 @@ We provide the <b>example.capx</b> file to show the basics of how to use the plu
 - Show leaderboard - Show high score menu
 - User name - Return the current user's name, or a guest name if not logged in
 - Session Key - SessionKey", "Return session key
+- Menu is visible - Know when a id.net menu is shown to the player
 
 ### Need More Help
 
