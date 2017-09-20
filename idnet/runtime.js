@@ -213,20 +213,22 @@ cr.plugins_.IDNet = function(runtime) {
 		}
 	};
 	
-	Acts.prototype.ShowLeaderBoard = function(table_, mode_, highest_, allowduplicates_) {
+	Acts.prototype.ShowLeaderBoard = function(table, mode, highest, allowduplicates) {
 		if (idNetInst.authorized) {
-			ID.GameAPI.Leaderboards.list({table:table_, mode: mode_, highest: highest_, allowduplicates: allowduplicates_});
+			console.log('oi')
+			var options = { table: table, mode: mode, highest: !!highest, allowduplicates: !!allowduplicates };
+			ID.GameAPI.Leaderboards.list(options);
 		}
 	};
 	
-	Acts.prototype.SubmitScore = function(score_, table_, allowduplicates_, highest_, playername_) {
+	Acts.prototype.SubmitScore = function(score, table, allowduplicates, highest, playername) {
 		if (idNetInst.authorized) {
 			 var score = {
-				table: table_,
-				points: score_,
-				allowduplicates: allowduplicates_,
-				highest: highest_,
-				playername: playername_ || idNetInst.idnetUserName
+				table: table,
+				points: score,
+				allowduplicates: !!allowduplicates,
+				highest: !!highest,
+				playername: playername || idNetInst.idnetUserName
 			};
 			ID.GameAPI.Leaderboards.save(score, function(response) {
 				console.log("score submitted", response);

@@ -3,7 +3,7 @@ function GetPluginSettings()
 	return {
 		"name":			"id.net",			// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
 		"id":			"IDNet",			// this is used to identify this plugin and is saved to the project; never change it
-		"version":		"1.7",					// (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
+		"version":		"1.8",					// (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
 		"description":	"Connect your C2 game with id.net.",
 		"author":		"id.net and Y8.com",
 		"help url":		"https://github.com/webgroup-limited/id.net-construct-sdk",
@@ -84,7 +84,6 @@ AddAction(4, 0, "Send image to profile", "User", "Send image {0}", "Allow the us
 AddStringParam("Table", "The table name from id.net apps page");
 AddStringParam("Mode", "Equals alltime, last30days, last7days, today, or newest.", '"alltime"');
 AddNumberParam("Highest", " Set to 0 if a low score is better.", 1);
-AddNumberParam("Allowduplicates", "Set to 1 if player’s can have more than one score displayed.", 0);
 AddAction(5, 0, "Show leaderboard", "scores", "Show data leaderboard", "Show data leaderboard", "ShowLeaderBoard");
 
 AddStringParam("AchievementTitle", "AchievementName");
