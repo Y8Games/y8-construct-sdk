@@ -17,6 +17,7 @@ We provide the <b>example.capx</b> file to show the basics of how to use the plu
 
 ### Important Notes
 - Games must be hosted on <b>https</b> in order to work. Using https is possible using the id.net <a href="http://dev.id.net/docs/storage/">storage solution</a>. Any website, even non https ones, can iframe the game.
+- When exporting, disable the minify option as it causes issues with the id.net plugin.
 
 ### Available Functions
 - Is authorized - Returns true if sdk is loaded
