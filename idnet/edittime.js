@@ -1,12 +1,12 @@
 function GetPluginSettings()
 {
 	return {
-		"name":			"id.net",			// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
+		"name":			"Y8",			// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
 		"id":			"IDNet",			// this is used to identify this plugin and is saved to the project; never change it
 		"version":		"1.8",					// (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
 		"description":	"Connect your C2 game with id.net.",
 		"author":		"id.net and Y8.com",
-		"help url":		"https://github.com/webgroup-limited/id.net-construct-sdk",
+		"help url":		"https://github.com/webgroup-limited/Y8-construct-sdk",
 		"category":		"Platform specific",	// Prefer to re-use existing categories, but you can set anything here
 		"type":			"object",				// either "world" (appears in layout and is drawn), else "object"
 		"rotatable":	false,					// only used when "type" is "world".  Enables an angle property on the object.
