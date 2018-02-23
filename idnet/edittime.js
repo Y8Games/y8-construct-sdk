@@ -1,12 +1,12 @@
 function GetPluginSettings()
 {
 	return {
-		"name":			"id.net",			// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
+		"name":			"Y8",			// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
 		"id":			"IDNet",			// this is used to identify this plugin and is saved to the project; never change it
-		"version":		"1.8",					// (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
-		"description":	"Connect your C2 game with id.net.",
+		"version":		"2.0",					// (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
+		"description":	"Connect your C2 game with Y8",
 		"author":		"id.net and Y8.com",
-		"help url":		"https://github.com/webgroup-limited/id.net-construct-sdk",
+		"help url":		"https://github.com/webgroup-limited/y8-construct-sdk",
 		"category":		"Platform specific",	// Prefer to re-use existing categories, but you can set anything here
 		"type":			"object",				// either "world" (appears in layout and is drawn), else "object"
 		"rotatable":	false,					// only used when "type" is "world".  Enables an angle property on the object.
@@ -104,8 +104,10 @@ AddAction(9, 0, "Load user data", "User", "Load data from online saves with titl
 AddStringParam("Key", "Key");
 AddAction(10, 0, "Remove user data", "User", "Remove data from online saves with title {0}", "Remove user data", "OnlineSavesRemove");
 
-AddAction(11, 0, "CheckIsBlacklisted", "Protection", "Check is domaine on blacklist", "Check is domaine on blacklist", "CheckIsBlacklisted");
-AddAction(12, 0, "CheckIsSponsor", "Protection", "Check is domaine on sponsorlist", "Check is domaine on sponsorlist", "CheckIsSponsor");
+AddAction(11, 0, "CheckIsBlacklisted", "Protection", "Check if domain on blacklist", "Check if domain on blacklist", "CheckIsBlacklisted");
+AddAction(12, 0, "CheckIsSponsor", "Protection", "Check if domain on sponsorlist", "Check if domain on sponsorlist", "CheckIsSponsor");
+
+AddAction(13, 0, "OpenProfile", "User", "Open a player's profile", "Open a player's profile", "openProfile");
 
 ////////////////////////////////////////
 // Expressions

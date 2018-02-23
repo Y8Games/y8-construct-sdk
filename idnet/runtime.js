@@ -305,6 +305,10 @@ cr.plugins_.IDNet = function(runtime) {
 			idNetInst.isSponsor = sponsor;
 		});
 	};
+
+	Acts.prototype.OpenProfile = function () {
+		ID.openProfile();
+	};
 	
 	pluginProto.acts = new Acts();
 	
