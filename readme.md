@@ -1,4 +1,4 @@
-## id.net Construct 2 Plugin
+## Y8 Construct 2 Plugin
 
 ### Install
 1. Download and unzip this repository
@@ -7,8 +7,8 @@
 
 ### Getting Started
 - Double click in a layout tab to open insert dialog
-- Add the IDNet plugin from the platform specific section
-- Now id.net events should be available in the event tabs
+- Add the Y8/IdNet plugin from the platform specific section
+- Now Y8 Login events should be available in the event tabs
 - Start by making a id.net _init_ action for _On start of layout_ event
 
 ### Example
@@ -16,7 +16,8 @@
 We provide the <b>example.capx</b> file to show the basics of how to use the plugin. Give it a glace, it's easier to understand compared to text only instructions.
 
 ### Important Notes
-- Games must be hosted on <b>https</b> in order to work. Using https is possible using the id.net <a href="http://dev.id.net/docs/storage/">storage solution</a>. Any website, even non https ones, can iframe the game.
+- Games must be hosted on <b>https</b> in order to work. Using https is possible using the id.net <a href="http://docs.y8.com/docs/storage/">storage solution</a>. Any website, even non https ones, can iframe the game.
+- When exporting, disable the minify option as it causes issues with the id.net plugin.
 
 ### Available Functions
 - Is authorized - Returns true if sdk is loaded
