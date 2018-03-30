@@ -3,14 +3,10 @@ function GetPluginSettings()
 	return {
 		"name":			"Y8",			// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
 		"id":			"IDNet",			// this is used to identify this plugin and is saved to the project; never change it
-		"version":		"2.0",					// (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
+		"version":		"2.1",					// (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
 		"description":	"Connect your C2 game with Y8",
 		"author":		"id.net and Y8.com",
-<<<<<<< HEAD
 		"help url":		"https://github.com/webgroup-limited/y8-construct-sdk",
-=======
-		"help url":		"https://github.com/webgroup-limited/Y8-construct-sdk",
->>>>>>> origin/master
 		"category":		"Platform specific",	// Prefer to re-use existing categories, but you can set anything here
 		"type":			"object",				// either "world" (appears in layout and is drawn), else "object"
 		"rotatable":	false,					// only used when "type" is "world".  Enables an angle property on the object.
