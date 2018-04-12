@@ -3,7 +3,7 @@ function GetPluginSettings()
 	return {
 		"name":			"Y8",			// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
 		"id":			"IDNet",			// this is used to identify this plugin and is saved to the project; never change it
-		"version":		"2.1",					// (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
+		"version":		"2.2",					// (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
 		"description":	"Connect your C2 game with Y8",
 		"author":		"id.net and Y8.com",
 		"help url":		"https://github.com/webgroup-limited/y8-construct-sdk",

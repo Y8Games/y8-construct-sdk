@@ -306,7 +306,7 @@ cr.plugins_.IDNet = function(runtime) {
 		});
 	};
 
-	Acts.prototype.OpenProfile = function () {
+	Acts.prototype.openProfile = function () {
 		ID.openProfile();
 	};
 	
