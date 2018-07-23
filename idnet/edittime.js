@@ -3,9 +3,9 @@ function GetPluginSettings()
 	return {
 		"name":			"Y8",			// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
 		"id":			"IDNet",			// this is used to identify this plugin and is saved to the project; never change it
-		"version":		"2.2",					// (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
+		"version":		"2.3",					// (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
 		"description":	"Connect your C2 game with Y8",
-		"author":		"id.net and Y8.com",
+		"author":		"Y8.com",
 		"help url":		"https://github.com/webgroup-limited/y8-construct-sdk",
 		"category":		"Platform specific",	// Prefer to re-use existing categories, but you can set anything here
 		"type":			"object",				// either "world" (appears in layout and is drawn), else "object"
@@ -42,8 +42,8 @@ function GetPluginSettings()
 //				description,		// appears in event wizard dialog when selected
 //				script_name);		// corresponding runtime function name
 				
-AddCondition(0, cf_none, "initialized", "Main", "Initialized", "id.net sdk is ready to use.", "isAuthorized");		
-AddCondition(1, cf_none, "Not initialized", "Main", "Not Initialized", "id.net is not ready to use", "isNotAuthorized");
+AddCondition(0, cf_none, "initialized", "Main", "Initialized", "Y8 Account sdk is ready to use.", "isAuthorized");		
+AddCondition(1, cf_none, "Not initialized", "Main", "Not Initialized", "Y8 Account SDK is not ready to use", "isNotAuthorized");
 AddCondition(2, cf_none, "Logged In", "Main", "Logged in", "Active when the player is signed in", "UserIsAuthorized");
 AddCondition(3, cf_none, "Not Logged In", "Main", "Not logged in", "Active when the player is a guest", "UserIsNotAuthorized");
 
@@ -52,7 +52,7 @@ AddCondition(5, cf_none, "isSponsor", "Protection and sponsor API", "isSponsor",
 
 AddCondition(6, cf_none, "Player data loaded", "User", "player data loaded", "Fires once when any player data has finished downloading.", "dataReady");
 
-AddCondition(7, cf_none, "Menu is visible", "Main", "Menu is visible", "Running when the id.net menu is open", "menuVisible");
+AddCondition(7, cf_none, "Y8 Menu is visible", "Main", "Menu is visible", "Running when the menu is open", "menuVisible");
 
 ////////////////////////////////////////
 // Actions
@@ -66,7 +66,7 @@ AddCondition(7, cf_none, "Menu is visible", "Main", "Menu is visible", "Running 
 //			 script_name);		// corresponding runtime function name
 
 AddStringParam("Appid", "appId");
-AddAction(0, 0, "Init", "Main", "Init", "Initialisation of id.net", "Inititalize");
+AddAction(0, 0, "Init", "Main", "Init", "Initialisation of Y8 Account", "Inititalize");
 
 AddAction(1, 0, "Registration", "User", "Show registration menu", "Show registration menu", "RegisterPopup");
 AddAction(2, 0, "Login", "User", "Show login menu", "Shows login menu", "LoginPopup");
@@ -81,7 +81,7 @@ AddAction(3, 0, "Submit score", "scores", "Submit scores {0}", "Submit a player'
 AddStringParam("Image", "Text to add to the shout box.");
 AddAction(4, 0, "Send image to profile", "User", "Send image {0}", "Allow the user to post image to page", "SubmitProfileImage");
 
-AddStringParam("Table", "The table name from id.net apps page");
+AddStringParam("Table", "The table name from Y8 Account apps page");
 AddStringParam("Mode", "Equals alltime, last30days, last7days, today, or newest.", '"alltime"');
 AddNumberParam("Highest", " Set to 0 if a low score is better.", 1);
 AddAction(5, 0, "Show leaderboard", "scores", "Show data leaderboard", "Show data leaderboard", "ShowLeaderBoard");
