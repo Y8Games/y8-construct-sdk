@@ -148,7 +148,11 @@ cr.plugins_.IDNet = function(runtime) {
 						console.log("Y8 autologin");
 						idNetInst.idnetUserName = response.user.nickname;
 						idNetInst.userAuthorized = true;
-						ID.login(function(response) {});
+						ID.getLoginStatus(function(data) {
+							if (data.status == 'not_linked') {
+								ID.login();
+							}
+						});
 					}
 				}
 
