@@ -36,6 +36,7 @@ cr.plugins_.IDNet = function(runtime) {
 	var isBlacklisted = 0;
 	var isSponsor = 0;
 	var gotSaveData = 0;
+	var gameBreakVisible = 1;
 	
 	// called on startup for each object type
 	typeProto.onCreate = function() {
@@ -122,6 +123,10 @@ cr.plugins_.IDNet = function(runtime) {
 		if (window.ID && ID.isVisible()) {
 			return 1;
 		}
+	};
+
+	Cnds.prototype.gameBreakVisible = function() {
+		return idNetInst.gameBreakVisible;
 	};
 	
 	pluginProto.cnds = new Cnds();
@@ -312,6 +317,13 @@ cr.plugins_.IDNet = function(runtime) {
 
 	Acts.prototype.openProfile = function () {
 		ID.openProfile();
+	};
+
+	Acts.prototype.gameBreak = function () {
+		idNetInst.gameBreakVisible = 1;
+		ID.gameBreak(function() {
+			idNetInst.gameBreakVisible = 0;
+		});
 	};
 	
 	pluginProto.acts = new Acts();

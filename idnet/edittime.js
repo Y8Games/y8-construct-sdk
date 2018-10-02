@@ -3,7 +3,7 @@ function GetPluginSettings()
 	return {
 		"name":			"Y8",			// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
 		"id":			"IDNet",			// this is used to identify this plugin and is saved to the project; never change it
-		"version":		"2.4",					// (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
+		"version":		"2.5",					// (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
 		"description":	"Connect your C2 game with Y8",
 		"author":		"Y8.com",
 		"help url":		"https://github.com/webgroup-limited/y8-construct-sdk",
@@ -53,6 +53,8 @@ AddCondition(5, cf_none, "isSponsor", "Protection and sponsor API", "isSponsor",
 AddCondition(6, cf_none, "Player data loaded", "User", "player data loaded", "Fires once when any player data has finished downloading.", "dataReady");
 
 AddCondition(7, cf_none, "Y8 Menu is visible", "Main", "Menu is visible", "Running when the menu is open", "menuVisible");
+
+AddCondition(8, cf_none, "gameBreak is visible", "Main", "gameBreak is visible", "will run when an ad is playing", "gameBreakVisible");
 
 ////////////////////////////////////////
 // Actions
@@ -108,6 +110,8 @@ AddAction(11, 0, "CheckIsBlacklisted", "Protection", "Check if domain on blackli
 AddAction(12, 0, "CheckIsSponsor", "Protection", "Check if domain on sponsorlist", "Check if domain on sponsorlist", "CheckIsSponsor");
 
 AddAction(13, 0, "OpenProfile", "User", "Open a player's profile", "Open a player's profile", "openProfile");
+
+AddAction(14, 0, "gameBreak", "Main", "Play advertisement (requires activation)", "Play advertisement", "gameBreak");
 
 ////////////////////////////////////////
 // Expressions
