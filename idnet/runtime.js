@@ -7,363 +7,359 @@ assert2(cr.plugins_, "cr.plugins_ not created");
 /////////////////////////////////////
 // Plugin class
 cr.plugins_.IDNet = function(runtime) {
-	this.runtime = runtime;
+  this.runtime = runtime;
 };
 
 //var ID = null;
 
 (function() {
-	var pluginProto = cr.plugins_.IDNet.prototype;
-		
-	/////////////////////////////////////
-	// Object type class
-	pluginProto.Type = function(plugin) {
-		this.plugin = plugin;
-		this.runtime = plugin.runtime;
-	};
+  var pluginProto = cr.plugins_.IDNet.prototype;
+    
+  /////////////////////////////////////
+  // Object type class
+  pluginProto.Type = function(plugin) {
+    this.plugin = plugin;
+    this.runtime = plugin.runtime;
+  };
 
-	var typeProto = pluginProto.Type.prototype;
+  var typeProto = pluginProto.Type.prototype;
 
-	var _document = null;
-	var _unsafeWindow = null;
-	var idNetRuntime = null;
-	var idNetInst = null;
-	var idnetUserName = "Guest";
-	var authorized = false;
-	var userAuthorized = false;
-	var idnetSessionKey = "";
-	var onlineSavesData = "";
-	var isBlacklisted = 0;
-	var isSponsor = 0;
-	var gotSaveData = 0;
-	var gameBreakVisible = 1;
-	
-	// called on startup for each object type
-	typeProto.onCreate = function() {
-	};
+  var _document = null;
+  var _unsafeWindow = null;
+  var idNetRuntime = null;
+  var idNetInst = null;
+  var idnetUserName = "Guest";
+  var authorized = false;
+  var userAuthorized = false;
+  var idnetSessionKey = "";
+  var onlineSavesData = "";
+  var isBlacklisted = 0;
+  var isSponsor = 0;
+  var gotSaveData = 0;
+  var gameBreakVisible = 1;
+  
+  // called on startup for each object type
+  typeProto.onCreate = function() {
+  };
 
-	/////////////////////////////////////
-	// Instance class
-	pluginProto.Instance = function(type) {
-		this.type = type;
-		this.runtime = type.runtime;
-		
-		idNetRuntime = this.runtime;
-		idNetInst = this;
-		this._document = window.document;
-		this._unsafeWindow = this._document.defaultView;
-	};
-	
-	function ShowLeaderBoardCallback(response) {
-		
-	}
-	
-	var instanceProto = pluginProto.Instance.prototype;
+  /////////////////////////////////////
+  // Instance class
+  pluginProto.Instance = function(type) {
+    this.type = type;
+    this.runtime = type.runtime;
+    
+    idNetRuntime = this.runtime;
+    idNetInst = this;
+    this._document = window.document;
+    this._unsafeWindow = this._document.defaultView;
+  };
+  
+  function ShowLeaderBoardCallback(response) {
+    
+  }
+  
+  var instanceProto = pluginProto.Instance.prototype;
 
-	// called whenever an instance is created
-	instanceProto.onCreate = function()
-	{
-	};
-	
-	// called whenever an instance is destroyed
-	// note the runtime may keep the object after this call for recycling; be sure
-	// to release/recycle/reset any references to other objects in this function.
-	instanceProto.onDestroy = function ()
-	{
-	};
-	
-	// only called if a layout object - draw to a canvas 2D context
-	instanceProto.draw = function(ctx)
-	{
-	};
-	
-	// only called if a layout object in WebGL mode - draw to the WebGL context
-	// 'glw' is not a WebGL context, it's a wrapper - you can find its methods in GLWrap.js in the install
-	// directory or just copy what other plugins do.
-	instanceProto.drawGL = function (glw)
-	{
-	};
+  // called whenever an instance is created
+  instanceProto.onCreate = function() {
+  };
+  
+  // called whenever an instance is destroyed
+  // note the runtime may keep the object after this call for recycling; be sure
+  // to release/recycle/reset any references to other objects in this function.
+  instanceProto.onDestroy = function () {
+  };
+  
+  // only called if a layout object - draw to a canvas 2D context
+  instanceProto.draw = function(ctx) {
+  };
+  
+  // only called if a layout object in WebGL mode - draw to the WebGL context
+  // 'glw' is not a WebGL context, it's a wrapper - you can find its methods in GLWrap.js in the install
+  // directory or just copy what other plugins do.
+  instanceProto.drawGL = function (glw) {
+  };
 
-	//////////////////////////////////////
-	// Conditions
-	function Cnds() {};
-	
-	Cnds.prototype.isAuthorized = function () {
-		return idNetInst.authorized;
-	};
-	
-	Cnds.prototype.isNotAuthorized = function () {
-		return !idNetInst.authorized;
-	};
-	
-	Cnds.prototype.UserIsAuthorized = function () {
-		return idNetInst.userAuthorized;
-	};
-	
-	Cnds.prototype.UserIsNotAuthorized = function () {
-		return !idNetInst.userAuthorized;
-	};
-	
-	Cnds.prototype.blacklisted = function () {
-		return idNetInst.isBlacklisted;
-	};
-	
-	Cnds.prototype.sponsored = function () {
-		return idNetInst.isSponsor;
-	};
+  //////////////////////////////////////
+  // Conditions
+  function Cnds() {};
+  
+  Cnds.prototype.isAuthorized = function () {
+    return idNetInst.authorized;
+  };
+  
+  Cnds.prototype.isNotAuthorized = function () {
+    return !idNetInst.authorized;
+  };
+  
+  Cnds.prototype.UserIsAuthorized = function () {
+    return idNetInst.userAuthorized;
+  };
+  
+  Cnds.prototype.UserIsNotAuthorized = function () {
+    return !idNetInst.userAuthorized;
+  };
+  
+  Cnds.prototype.blacklisted = function () {
+    return idNetInst.isBlacklisted;
+  };
+  
+  Cnds.prototype.sponsored = function () {
+    return idNetInst.isSponsor;
+  };
 
-	Cnds.prototype.dataReady = function () {
-		if (idNetInst.gotSaveData === 1) {
-			idNetInst.gotSaveData = 0;
-			return 1;
-		}
-	};
+  Cnds.prototype.dataReady = function () {
+    if (idNetInst.gotSaveData === 1) {
+      idNetInst.gotSaveData = 0;
+      return 1;
+    }
+  };
 
-	Cnds.prototype.menuVisible = function() {
-		if (window.ID && ID.isVisible()) {
-			return 1;
-		}
-	};
+  Cnds.prototype.menuVisible = function() {
+    if (window.ID && ID.isVisible()) {
+      return 1;
+    }
+  };
 
-	Cnds.prototype.gameBreakVisible = function() {
-		return idNetInst.gameBreakVisible;
-	};
-	
-	pluginProto.cnds = new Cnds();
-	
-	//////////////////////////////////////
-	// Actions
-	function Acts() {};
-	
-	Acts.prototype.Inititalize = function(appid_) {	
-		console.log('init with appid ' + appid_);
+  Cnds.prototype.gameBreakVisible = function() {
+    return idNetInst.gameBreakVisible;
+  };
+  
+  pluginProto.cnds = new Cnds();
+  
+  //////////////////////////////////////
+  // Actions
+  function Acts() {};
+  
+  Acts.prototype.Inititalize = function(appid_) { 
+    console.log('init with appid ' + appid_);
 
-		(function(d, s, id){
-	        var js, fjs = d.getElementsByTagName(s)[0];
-	        if (d.getElementById(id)) {return;}
-	        js = d.createElement(s); js.id = id;
-	        js.src =  document.location.protocol == 'https:' ? "https://cdn.y8.com/api/sdk.js" : "http://cdn.y8.com/api/sdk.js";
-	        fjs.parentNode.insertBefore(js, fjs);
-	    }(document, 'script', 'id-jssdk'));
+    (function(d, s, id){
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) {return;}
+          js = d.createElement(s); js.id = id;
+          js.src =  document.location.protocol == 'https:' ? "https://cdn.y8.com/api/sdk.js" : "http://cdn.y8.com/api/sdk.js";
+          fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'id-jssdk'));
 
-		window.idAsyncInit = function() {
-			ID.Event.subscribe("id.init",function() {
-				window.idnet_autologin = function(response) {
-					if (response != null && response.user != null) {
-						console.log("Y8 autologin");
-						idNetInst.idnetUserName = response.user.nickname;
-						idNetInst.userAuthorized = true;
-						ID.getLoginStatus(function(data) {
-							if (data.status == 'not_linked') {
-								ID.login();
-							}
-						});
-					}
-				}
+    window.idAsyncInit = function() {
+      ID.Event.subscribe("id.init",function() {
+        window.idnet_autologin = function(response) {
+          if (response != null && response.user != null) {
+            console.log("Y8 autologin");
+            idNetInst.idnetUserName = response.user.nickname;
+            idNetInst.userAuthorized = true;
+            ID.getLoginStatus(function(data) {
+              if (data.status == 'not_linked') {
+                ID.login();
+              }
+            });
+          }
+        }
 
-				var fjs = document.head.getElementsByTagName('meta')[0];
-				if (document.getElementById('id-autologin')) {
-					var js_auto = document.getElementById('id-autologin');
-				} else {
-					var js_auto = document.createElement('script');
-					js_auto.id = 'id-autologin';
-					js_auto.src = "https://account.y8.com/api/user_data/autologin?app_id=" + appid_ + "&callback=window.idnet_autologin";
-					fjs.parentNode.insertBefore(js_auto, fjs);
-				}
+        var fjs = document.head.getElementsByTagName('meta')[0];
+        if (document.getElementById('id-autologin')) {
+          var js_auto = document.getElementById('id-autologin');
+        } else {
+          var js_auto = document.createElement('script');
+          js_auto.id = 'id-autologin';
+          js_auto.src = "https://account.y8.com/api/user_data/autologin?app_id=" + appid_ + "&callback=window.idnet_autologin";
+          fjs.parentNode.insertBefore(js_auto, fjs);
+        }
 
-				console.log("Y8 initialized");
-				
-				ID.Protection.isBlacklisted(function(blacklisted) {
-					idNetInst.isBlacklisted = blacklisted;
-				});
-				
-				ID.Protection.isSponsor(function(sponsor) {
-					idNetInst.isSponsor = sponsor;
-				});
-			});
-			
-			ID.init({
-				appId : appid_
-			});
-			
-			idNetInst.authorized = true;
-		}
-	};
-	
-	Acts.prototype.RegisterPopup = function() {
-		console.log("open registration menu");
-		if (idNetInst.authorized)
-			ID.register(function (response) {
-				if(response == null) {
-					//this.d.dispatch("auth.fail")
-				} else {
-					console.log("Registration complete");
-					idNetInst.idnetUserName = response.authResponse.details.nickname;
-					idNetInst.userAuthorized = true;
-					//this.d.dispatch("auth.complete");
-				}
-			});
-	};
-	
-	Acts.prototype.LoginPopup = function() {
-		console.log("open login menu");
-		if (idNetInst.authorized){
-			ID.login(function (response) {
-				//console.log(response);
-				if(response == null) {
-					//this.d.dispatch("auth.fail")
-				} else {
-					console.log("Login complete");
-					idNetInst.idnetUserName = response.authResponse.details.nickname;
-					idNetInst.userAuthorized = true;
-					//this.d.dispatch("auth.complete");
-				}
-			});
-		}
-	};
-	
-	Acts.prototype.ShowLeaderBoard = function(table, mode, highest, allowduplicates) {
-		if (idNetInst.authorized) {
-			console.log('oi')
-			var options = { table: table, mode: mode, highest: !!highest, allowduplicates: !!allowduplicates };
-			ID.GameAPI.Leaderboards.list(options);
-		}
-	};
-	
-	Acts.prototype.SubmitScore = function(score, table, allowduplicates, highest, playername) {
-		if (idNetInst.authorized) {
-			 var score = {
-				table: table,
-				points: score,
-				allowduplicates: !!allowduplicates,
-				highest: !!highest,
-				playername: playername || idNetInst.idnetUserName
-			};
-			ID.GameAPI.Leaderboards.save(score, function(response) {
-				console.log("score submitted", response);
-			});
-		}
-	};
-	
-	Acts.prototype.SubmitProfileImage = function(image_) {
-		if (idNetInst.authorized)
-			ID.submit_image(image_, function(response){
-				console.log("screenshot submitted", response);
-			});
-	};
-	
-	Acts.prototype.AchievementSave = function(achievementTitle_, achievementKey_, overwrite_, allowduplicates_) {
-		if (idNetInst.authorized) {
-			var achievementData = {
-			  achievement: achievementTitle_,
-			  achievementkey: achievementKey_,
-			  overwrite: overwrite_,
-			  allowduplicates: allowduplicates_
-			};
-			
-			ID.GameAPI.Achievements.save(achievementData, function(response) {
-				console.log("achievement saved", response);
-			});
-		}
-	};
-	
-	Acts.prototype.ShowAchievements = function() {
-		if (idNetInst.authorized) {
-			ID.GameAPI.Achievements.list();
-		}
-	};
-	
-	Acts.prototype.OnlineSavesSave = function(key_, value_) {
-		if (idNetInst.authorized) {
-			ID.api('user_data/submit', 'POST', {key: key_, value: value_}, function(response) {
-				console.log("save submitted", response);
-			});
-		}
-	};
-	
-	Acts.prototype.OnlineSavesRemove = function(key_) {
-		if (idNetInst.authorized) {
-			ID.api('user_data/remove', 'POST', {key: key_}, function(response) {
-				console.log("save deleted", response);
-			});
-		}
-	};
-	
-	Acts.prototype.OnlineSavesLoad = function(key_) {
-		if (idNetInst.authorized) {
-			ID.api('user_data/retrieve', 'POST', {key: key_}, function(response) {
-				if(response) {
-					idNetInst.onlineSavesData = response.jsondata;
-					idNetInst.gotSaveData = 1;
-					console.log("save loaded", response);
-				}
-			});
-		}
-	};
-	
-	Acts.prototype.CheckIsBlacklisted = function () {
-		ID.Protection.isBlacklisted(function(blacklisted){
-			console.log("check blacklist called", blacklisted);
-			idNetInst.isBlacklisted = blacklisted;
-		});
-	};
-	
-	Acts.prototype.CheckIsSponsor = function () {
-		ID.Protection.isSponsor(function(sponsor){
-			console.log("check sponser called", sponser);
-			idNetInst.isSponsor = sponsor;
-		});
-	};
+        console.log("Y8 initialized");
+        
+        ID.Protection.isBlacklisted(function(blacklisted) {
+          idNetInst.isBlacklisted = blacklisted;
+        });
+        
+        ID.Protection.isSponsor(function(sponsor) {
+          idNetInst.isSponsor = sponsor;
+        });
+      });
+      
+      ID.init({
+        appId : appid_
+      });
+      
+      idNetInst.authorized = true;
+    }
+  };
+  
+  Acts.prototype.RegisterPopup = function() {
+    console.log("open registration menu");
+    if (idNetInst.authorized)
+      ID.register(function (response) {
+        if(response == null) {
+          //this.d.dispatch("auth.fail")
+        } else {
+          console.log("Registration complete");
+          idNetInst.idnetUserName = response.authResponse.details.nickname;
+          idNetInst.userAuthorized = true;
+          //this.d.dispatch("auth.complete");
+        }
+      });
+  };
+  
+  Acts.prototype.LoginPopup = function() {
+    console.log("open login menu");
+    if (idNetInst.authorized){
+      ID.login(function (response) {
+        //console.log(response);
+        if(response == null) {
+          //this.d.dispatch("auth.fail")
+        } else {
+          console.log("Login complete");
+          idNetInst.idnetUserName = response.authResponse.details.nickname;
+          idNetInst.userAuthorized = true;
+          //this.d.dispatch("auth.complete");
+        }
+      });
+    }
+  };
+  
+  Acts.prototype.ShowLeaderBoard = function(table, mode, highest, allowduplicates) {
+    if (idNetInst.authorized) {
+      console.log('oi')
+      var options = { table: table, mode: mode, highest: !!highest, allowduplicates: !!allowduplicates };
+      ID.GameAPI.Leaderboards.list(options);
+    }
+  };
+  
+  Acts.prototype.SubmitScore = function(score, table, allowduplicates, highest, playername) {
+    if (idNetInst.authorized) {
+       var score = {
+        table: table,
+        points: score,
+        allowduplicates: !!allowduplicates,
+        highest: !!highest,
+        playername: playername || idNetInst.idnetUserName
+      };
+      ID.GameAPI.Leaderboards.save(score, function(response) {
+        console.log("score submitted", response);
+      });
+    }
+  };
+  
+  Acts.prototype.SubmitProfileImage = function(image_) {
+    if (idNetInst.authorized)
+      ID.submit_image(image_, function(response){
+        console.log("screenshot submitted", response);
+      });
+  };
+  
+  Acts.prototype.AchievementSave = function(achievementTitle_, achievementKey_, overwrite_, allowduplicates_) {
+    if (idNetInst.authorized) {
+      var achievementData = {
+        achievement: achievementTitle_,
+        achievementkey: achievementKey_,
+        overwrite: overwrite_,
+        allowduplicates: allowduplicates_
+      };
+      
+      ID.GameAPI.Achievements.save(achievementData, function(response) {
+        console.log("achievement saved", response);
+      });
+    }
+  };
+  
+  Acts.prototype.ShowAchievements = function() {
+    if (idNetInst.authorized) {
+      ID.GameAPI.Achievements.list();
+    }
+  };
+  
+  Acts.prototype.OnlineSavesSave = function(key_, value_) {
+    if (idNetInst.authorized) {
+      ID.api('user_data/submit', 'POST', {key: key_, value: value_}, function(response) {
+        console.log("save submitted", response);
+      });
+    }
+  };
+  
+  Acts.prototype.OnlineSavesRemove = function(key_) {
+    if (idNetInst.authorized) {
+      ID.api('user_data/remove', 'POST', {key: key_}, function(response) {
+        console.log("save deleted", response);
+      });
+    }
+  };
+  
+  Acts.prototype.OnlineSavesLoad = function(key_) {
+    if (idNetInst.authorized) {
+      ID.api('user_data/retrieve', 'POST', {key: key_}, function(response) {
+        if(response) {
+          idNetInst.onlineSavesData = response.jsondata;
+          idNetInst.gotSaveData = 1;
+          console.log("save loaded", response);
+        }
+      });
+    }
+  };
+  
+  Acts.prototype.CheckIsBlacklisted = function () {
+    ID.Protection.isBlacklisted(function(blacklisted){
+      console.log("check blacklist called", blacklisted);
+      idNetInst.isBlacklisted = blacklisted;
+    });
+  };
+  
+  Acts.prototype.CheckIsSponsor = function () {
+    ID.Protection.isSponsor(function(sponsor){
+      console.log("check sponser called", sponser);
+      idNetInst.isSponsor = sponsor;
+    });
+  };
 
-	Acts.prototype.openProfile = function () {
-		ID.openProfile();
-	};
+  Acts.prototype.openProfile = function () {
+    ID.openProfile();
+  };
 
-	Acts.prototype.gameBreak = function () {
-		idNetInst.gameBreakVisible = 1;
-		ID.gameBreak(function() {
-			idNetInst.gameBreakVisible = 0;
-		});
-	};
-	
-	pluginProto.acts = new Acts();
-	
-	//////////////////////////////////////
-	// Expressions
-	function Exps() {};
-	
-	Exps.prototype.UserName = function(ret) {
-		if(idNetInst.idnetUserName != undefined) {
-			ret.set_string(idNetInst.idnetUserName);
-		}
-	};
-	
-	Exps.prototype.SessionKey = function(ret) {
-		if(idnetSessionKey != undefined) {
-			ret.set_string(idnetSessionKey);
-		}
-	};
-	
-	Exps.prototype.GateOnlineSavesData = function (ret) {
-		ret.set_string(String(idNetInst.onlineSavesData));
-	};
-	
-	Exps.prototype.GetIsBlacklisted = function(ret) {
-		if(idNetInst.isBlacklisted) {
-			ret.set_int(1);
-		} else {
-			ret.set_int(0);
-		}
-	};
-	
-	Exps.prototype.GetIsSponsor = function(ret) {
-		if(idNetInst.isSponsor) {
-			ret.set_int(1);
-		} else {
-			ret.set_int(0);
-		}
-	};
-	
-	pluginProto.exps = new Exps();
+  Acts.prototype.gameBreak = function () {
+    idNetInst.gameBreakVisible = 1;
+    ID.gameBreak(function() {
+      idNetInst.gameBreakVisible = 0;
+    });
+  };
+  
+  pluginProto.acts = new Acts();
+  
+  //////////////////////////////////////
+  // Expressions
+  function Exps() {};
+  
+  Exps.prototype.UserName = function(ret) {
+    if(idNetInst.idnetUserName != undefined) {
+      ret.set_string(idNetInst.idnetUserName);
+    }
+  };
+  
+  Exps.prototype.SessionKey = function(ret) {
+    if(idnetSessionKey != undefined) {
+      ret.set_string(idnetSessionKey);
+    }
+  };
+  
+  Exps.prototype.GateOnlineSavesData = function (ret) {
+    ret.set_string(String(idNetInst.onlineSavesData));
+  };
+  
+  Exps.prototype.GetIsBlacklisted = function(ret) {
+    if(idNetInst.isBlacklisted) {
+      ret.set_int(1);
+    } else {
+      ret.set_int(0);
+    }
+  };
+  
+  Exps.prototype.GetIsSponsor = function(ret) {
+    if(idNetInst.isSponsor) {
+      ret.set_int(1);
+    } else {
+      ret.set_int(0);
+    }
+  };
+  
+  pluginProto.exps = new Exps();
 
 }());
