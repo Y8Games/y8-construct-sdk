@@ -37,6 +37,7 @@ cr.plugins_.IDNet = function(runtime) {
   var isSponsor = 0;
   var gotSaveData = 0;
   var gameBreakVisible = 1;
+  var pointsLoaded = 0;
   
   // called on startup for each object type
   typeProto.onCreate = function() {
@@ -84,31 +85,31 @@ cr.plugins_.IDNet = function(runtime) {
   // Conditions
   function Cnds() {};
   
-  Cnds.prototype.isAuthorized = function () {
+  Cnds.prototype.isAuthorized = function() {
     return idNetInst.authorized;
   };
   
-  Cnds.prototype.isNotAuthorized = function () {
+  Cnds.prototype.isNotAuthorized = function() {
     return !idNetInst.authorized;
   };
   
-  Cnds.prototype.UserIsAuthorized = function () {
+  Cnds.prototype.UserIsAuthorized = function() {
     return idNetInst.userAuthorized;
   };
   
-  Cnds.prototype.UserIsNotAuthorized = function () {
+  Cnds.prototype.UserIsNotAuthorized = function() {
     return !idNetInst.userAuthorized;
   };
   
-  Cnds.prototype.blacklisted = function () {
+  Cnds.prototype.blacklisted = function() {
     return idNetInst.isBlacklisted;
   };
   
-  Cnds.prototype.sponsored = function () {
+  Cnds.prototype.sponsored = function() {
     return idNetInst.isSponsor;
   };
 
-  Cnds.prototype.dataReady = function () {
+  Cnds.prototype.dataReady = function() {
     if (idNetInst.gotSaveData === 1) {
       idNetInst.gotSaveData = 0;
       return 1;
@@ -123,6 +124,13 @@ cr.plugins_.IDNet = function(runtime) {
 
   Cnds.prototype.gameBreakVisible = function() {
     return idNetInst.gameBreakVisible;
+  };
+
+  Cnds.prototype.pointsAvailable = function() {
+    if (idNetInst.pointsLoaded === 1) {
+      idNetInst.pointsLoaded = 0;
+      return 1;
+    }
   };
   
   pluginProto.cnds = new Cnds();
@@ -196,6 +204,7 @@ cr.plugins_.IDNet = function(runtime) {
           console.log("Registration complete");
           idNetInst.idnetUserName = response.authResponse.details.nickname;
           idNetInst.userAuthorized = true;
+          idNetInst.pid = response.authResponse.details.pid;
           //this.d.dispatch("auth.complete");
         }
       });
@@ -212,6 +221,7 @@ cr.plugins_.IDNet = function(runtime) {
           console.log("Login complete");
           idNetInst.idnetUserName = response.authResponse.details.nickname;
           idNetInst.userAuthorized = true;
+          idNetInst.pid = response.authResponse.details.pid;
           //this.d.dispatch("auth.complete");
         }
       });
@@ -320,6 +330,18 @@ cr.plugins_.IDNet = function(runtime) {
     ID.gameBreak(function() {
       idNetInst.gameBreakVisible = 0;
     });
+  };
+
+  Acts.prototype.pointsFetch = function() {
+    if (idNetInst.authorized && idNetInst.pid) {
+      ID.api('points/total/' + idNetInst.pid, 'GET', {}, function(data) {
+        if(response) {
+          idNetInst.points = data.points;
+          idNetInst.pointsLoaded = 1;
+          console.log("Player points", data);
+        }
+      });
+    }
   };
   
   pluginProto.acts = new Acts();

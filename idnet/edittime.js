@@ -56,6 +56,8 @@ AddCondition(7, cf_none, "Y8 Menu is visible", "Main", "Menu is visible", "Runni
 
 AddCondition(8, cf_none, "gameBreak is visible", "Main", "gameBreak is visible", "will run when an ad is playing", "gameBreakVisible");
 
+AddCondition(9, cf_none, "points data fetched", "Main", "points data available", "will run when pointsFetch is complete", "pointsAvailable");
+
 ////////////////////////////////////////
 // Actions
 
@@ -112,6 +114,8 @@ AddAction(12, 0, "CheckIsSponsor", "Protection", "Check if domain on sponsorlist
 AddAction(13, 0, "OpenProfile", "User", "Open a player's profile", "Open a player's profile", "openProfile");
 
 AddAction(14, 0, "gameBreak", "Main", "Play advertisement (requires activation)", "Play advertisement", "gameBreak");
+
+AddAction(15, 0, "Fetch player points", "User", "Player points are awarded for playing games.", "Fetch player points", "pointsFetch");
 
 ////////////////////////////////////////
 // Expressions
