@@ -127,10 +127,7 @@ cr.plugins_.IDNet = function(runtime) {
   };
 
   Cnds.prototype.pointsAvailable = function() {
-    if (idNetInst.pointsLoaded === 1) {
-      idNetInst.pointsLoaded = 0;
-      return 1;
-    }
+    return pointsLoaded;
   };
   
   pluginProto.cnds = new Cnds();
@@ -157,6 +154,7 @@ cr.plugins_.IDNet = function(runtime) {
             console.log("Y8 autologin");
             idNetInst.idnetUserName = response.user.nickname;
             idNetInst.userAuthorized = true;
+            idNetInst.pid = response.user.pid;
             ID.getLoginStatus(function(data) {
               if (data.status == 'not_linked') {
                 ID.login();
@@ -230,7 +228,6 @@ cr.plugins_.IDNet = function(runtime) {
   
   Acts.prototype.ShowLeaderBoard = function(table, mode, highest, allowduplicates) {
     if (idNetInst.authorized) {
-      console.log('oi')
       var options = { table: table, mode: mode, highest: !!highest, allowduplicates: !!allowduplicates };
       ID.GameAPI.Leaderboards.list(options);
     }
@@ -333,14 +330,18 @@ cr.plugins_.IDNet = function(runtime) {
   };
 
   Acts.prototype.pointsFetch = function() {
-    if (idNetInst.authorized && idNetInst.pid) {
-      ID.api('points/total/' + idNetInst.pid, 'GET', {}, function(data) {
-        if(response) {
-          idNetInst.points = data.points;
-          idNetInst.pointsLoaded = 1;
-          console.log("Player points", data);
-        }
-      });
+    if (pointsLoaded === 0) {
+      pointsLoaded = 1;
+      if (idNetInst.authorized && idNetInst.pid) {
+        ID.api('points/total/' + idNetInst.pid, 'GET', null, function(response) {
+          if(response) {
+            idNetInst.points = response.points;
+            console.log("Player points", response);
+          } 
+        });
+      } else {
+        console.log('Error: fetching points');
+      }
     }
   };
   
@@ -379,6 +380,12 @@ cr.plugins_.IDNet = function(runtime) {
       ret.set_int(1);
     } else {
       ret.set_int(0);
+    }
+  };
+
+  Exps.prototype.GetPoints = function(ret) {
+    if(idNetInst.points != undefined) {
+      ret.set_int(idNetInst.points);
     }
   };
   

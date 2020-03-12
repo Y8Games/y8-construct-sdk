@@ -3,7 +3,7 @@ function GetPluginSettings()
   return {
     "name":     "Y8",     // as appears in 'insert object' dialog, can be changed as long as "id" stays the same
     "id":     "IDNet",      // this is used to identify this plugin and is saved to the project; never change it
-    "version":    "2.5",          // (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
+    "version":    "2.6",          // (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
     "description":  "Connect your C2 game with Y8",
     "author":   "Y8.com",
     "help url":   "https://github.com/webgroup-limited/y8-construct-sdk",
@@ -136,6 +136,7 @@ AddExpression(2, ef_return_string, "User data", "Saves", "GateOnlineSavesData", 
 
 AddExpression(3, ef_return_number, "Get is blacklisted", "Protection and sponsor API", "GetIsBlacklisted", "Return is blacklisted");
 AddExpression(4, ef_return_number, "Get is sponsor", "Protection and sponsor API", "GetIsSponsor", "Return get is sponsor");
+AddExpression(5, ef_return_number, "Get player points", "User", "GetPoints", "Return player points");
 
 ////////////////////////////////////////
 ACESDone();
