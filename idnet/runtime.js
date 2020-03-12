@@ -38,6 +38,7 @@ cr.plugins_.IDNet = function(runtime) {
   var gotSaveData = 0;
   var gameBreakVisible = 1;
   var pointsLoaded = 0;
+  var pointsFetched = 0;
   
   // called on startup for each object type
   typeProto.onCreate = function() {
@@ -153,8 +154,8 @@ cr.plugins_.IDNet = function(runtime) {
           if (response != null && response.user != null) {
             console.log("Y8 autologin");
             idNetInst.idnetUserName = response.user.nickname;
-            idNetInst.userAuthorized = true;
             idNetInst.pid = response.user.pid;
+            idNetInst.userAuthorized = true;
             ID.getLoginStatus(function(data) {
               if (data.status == 'not_linked') {
                 ID.login();
@@ -201,8 +202,8 @@ cr.plugins_.IDNet = function(runtime) {
         } else {
           console.log("Registration complete");
           idNetInst.idnetUserName = response.authResponse.details.nickname;
-          idNetInst.userAuthorized = true;
           idNetInst.pid = response.authResponse.details.pid;
+          idNetInst.userAuthorized = true;
           //this.d.dispatch("auth.complete");
         }
       });
@@ -218,8 +219,8 @@ cr.plugins_.IDNet = function(runtime) {
         } else {
           console.log("Login complete");
           idNetInst.idnetUserName = response.authResponse.details.nickname;
-          idNetInst.userAuthorized = true;
           idNetInst.pid = response.authResponse.details.pid;
+          idNetInst.userAuthorized = true;
           //this.d.dispatch("auth.complete");
         }
       });
@@ -330,14 +331,17 @@ cr.plugins_.IDNet = function(runtime) {
   };
 
   Acts.prototype.pointsFetch = function() {
-    if (pointsLoaded === 0) {
-      pointsLoaded = 1;
-      if (idNetInst.authorized && idNetInst.pid) {
+    if (pointsFetched === 0) {
+      pointsFetched = 1;
+      if (idNetInst.pid) {
         ID.api('points/total/' + idNetInst.pid, 'GET', null, function(response) {
           if(response) {
             idNetInst.points = response.points;
+            pointsLoaded = 1;
             console.log("Player points", response);
-          } 
+          } else {
+            console.log('Error: fetching points, no data');
+          }
         });
       } else {
         console.log('Error: fetching points');
@@ -385,7 +389,7 @@ cr.plugins_.IDNet = function(runtime) {
 
   Exps.prototype.GetPoints = function(ret) {
     if(idNetInst.points != undefined) {
-      ret.set_int(idNetInst.points);
+      ret.set_int(idNetInst.points || 0);
     }
   };
   
