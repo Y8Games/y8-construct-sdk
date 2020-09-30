@@ -1,0 +1,218 @@
+{
+	"languageTag": "en-US",
+	"fileDescription": "Strings for Y8.",
+	"text": {
+		"plugins": {
+			"idnet": {
+				"name": "Y8",
+				"description": "Connect your C2 game with Y8",
+				"help-url": "https://github.com/webgroup-limited/y8-construct-sdk",
+				"properties": {
+				},
+				"aceCategories": {
+					"main": "Main",
+					"user": "User",
+					"scores": "scores",
+					"achievements": "Achievements",
+					"protection": "Protection",
+					"protection_and_sponsor_api": "Protection and sponsor API",
+					"saves": "Saves"
+				},
+				"conditions": {
+					"isauthorized0": {
+						"list-name": "initialized",
+						"display-text": "Initialized",
+						"description": "Y8 Account sdk is ready to use."
+						},
+					"isnotauthorized1": {
+						"list-name": "Not initialized",
+						"display-text": "Not Initialized",
+						"description": "Y8 Account SDK is not ready to use"
+						},
+					"userisauthorized2": {
+						"list-name": "Logged In",
+						"display-text": "Logged in",
+						"description": "Active when the player is signed in"
+						},
+					"userisnotauthorized3": {
+						"list-name": "Not Logged In",
+						"display-text": "Not logged in",
+						"description": "Active when the player is a guest"
+						},
+					"blacklisted4": {
+						"list-name": "isBlacklisted",
+						"display-text": "isBlacklisted",
+						"description": "True if domain in blacklist"
+						},
+					"sponsored5": {
+						"list-name": "isSponsor",
+						"display-text": "isSponsor",
+						"description": "True if domain in sponsor list"
+						},
+					"dataready6": {
+						"list-name": "Player data loaded",
+						"display-text": "player data loaded",
+						"description": "Fires once when any player data has finished downloading."
+						},
+					"menuvisible7": {
+						"list-name": "Y8 Menu is visible",
+						"display-text": "Menu is visible",
+						"description": "Running when the menu is open"
+						},
+					"gamebreakvisible8": {
+						"list-name": "gameBreak is visible",
+						"display-text": "gameBreak is visible",
+						"description": "will run when an ad is playing"
+						},
+					"pointsavailable9": {
+						"list-name": "points data fetched",
+						"display-text": "points data available",
+						"description": "will run when pointsFetch is complete"
+						}
+				},
+				"actions": {
+					"inititalize0": {
+						"list-name": "Init",
+						"display-text": "Init {0}",
+						"description": "Initialisation of Y8 Account",
+						"params": {
+							"appid0": { "name":"Appid", "desc":"appId"}
+						}
+					},
+					"registerpopup1": {
+						"list-name": "Registration",
+						"display-text": "Show registration menu",
+						"description": "Show registration menu"
+					},
+					"loginpopup2": {
+						"list-name": "Login",
+						"display-text": "Show login menu",
+						"description": "Shows login menu"
+					},
+					"submitscore3": {
+						"list-name": "Submit score",
+						"display-text": "Submit scores {0} {1} {2} {3} {4}",
+						"description": "Submit a player's score",
+						"params": {
+							"score0": { "name":"Score", "desc":"The player's score value"},
+							"table1": { "name":"Table", "desc":"Table name"},
+							"allowduplicates2": { "name":"Allowduplicates", "desc":"Set to 1 if player’s can submit more than one score."},
+							"highest3": { "name":"Highest", "desc":"Table name"},
+							"playername_(optional)4": { "name":"Playername (optional)", "desc":"Set playername"}
+						}
+					},
+					"submitprofileimage4": {
+						"list-name": "Send image to profile",
+						"display-text": "Send image {0}",
+						"description": "Allow the user to post image to page",
+						"params": {
+							"image0": { "name":"Image", "desc":"Text to add to the shout box."}
+						}
+					},
+					"showleaderboard5": {
+						"list-name": "Show leaderboard",
+						"display-text": "Show data leaderboard {0} {1} {2}",
+						"description": "Show data leaderboard",
+						"params": {
+							"table0": { "name":"Table", "desc":"The table name from Y8 Account apps page"},
+							"mode1": { "name":"Mode", "desc":"Equals alltime, last30days, last7days, today, or newest."},
+							"highest2": { "name":"Highest", "desc":"Set to 0 if a low score is better."}
+						}
+					},
+					"achievementsave6": {
+						"list-name": "Save achievement",
+						"display-text": "Save achievement with title {0} and key {1} {2} {3}",
+						"description": "Save achievement",
+						"params": {
+							"achievementtitle0": { "name":"AchievementTitle", "desc":"AchievementName"},
+							"achievementkey1": { "name":"AchievementKey", "desc":"AchievementKey"},
+							"overwrite2": { "name":"Overwrite", "desc":"Allow players to unlock the same achievement more than once."},
+							"allowduplicates3": { "name":"Allowduplicates", "desc":"Allow players to unlock the same achievement and display them seperatly."}
+						}
+					},
+					"showachievements7": {
+						"list-name": "Show achievements",
+						"display-text": "Show achievements",
+						"description": "Show achievements"
+					},
+					"onlinesavessave8": {
+						"list-name": "Save user data",
+						"display-text": "Save data to online saves with title {0} and value {1}",
+						"description": "Save user data",
+						"params": {
+							"key0": { "name":"Key", "desc":"Key"},
+							"value1": { "name":"Value", "desc":"Value"}
+						}
+					},
+					"onlinesavesload9": {
+						"list-name": "Load user data",
+						"display-text": "Load data from online saves with title {0}",
+						"description": "Load user data",
+						"params": {
+							"key0": { "name":"Key", "desc":"Key"}
+						}
+					},
+					"onlinesavesremove10": {
+						"list-name": "Remove user data",
+						"display-text": "Remove data from online saves with title {0}",
+						"description": "Remove user data",
+						"params": {
+							"key0": { "name":"Key", "desc":"Key"}
+						}
+					},
+					"checkisblacklisted11": {
+						"list-name": "CheckIsBlacklisted",
+						"display-text": "Check if domain on blacklist",
+						"description": "Check if domain on blacklist"
+					},
+					"checkissponsor12": {
+						"list-name": "CheckIsSponsor",
+						"display-text": "Check if domain on sponsorlist",
+						"description": "Check if domain on sponsorlist"
+					},
+					"openprofile13": {
+						"list-name": "OpenProfile",
+						"display-text": "Open a player's profile",
+						"description": "Open a player's profile"
+					},
+					"gamebreak14": {
+						"list-name": "gameBreak",
+						"display-text": "Play advertisement (requires activation)",
+						"description": "Play advertisement"
+					},
+					"pointsfetch15": {
+						"list-name": "Fetch player points",
+						"display-text": "Player points are awarded for playing games.",
+						"description": "Fetch player points"
+					}
+				},
+				"expressions": {
+					"username0": {
+						"description": "Return the current user's name, or a guest name if not logged in.",
+						"translated-name": "UserName"
+						},
+					"sessionkey1": {
+						"description": "Return session key",
+						"translated-name": "SessionKey"
+						},
+					"gateonlinesavesdata2": {
+						"description": "Return user data of online saves",
+						"translated-name": "GateOnlineSavesData"
+						},
+					"getisblacklisted3": {
+						"description": "Return is blacklisted",
+						"translated-name": "GetIsBlacklisted"
+						},
+					"getissponsor4": {
+						"description": "Return get is sponsor",
+						"translated-name": "GetIsSponsor"
+						},
+					"getpoints5": {
+						"description": "Return player points",
+						"translated-name": "GetPoints"
+						}
+				}
+			}
+		}
+	}
+}

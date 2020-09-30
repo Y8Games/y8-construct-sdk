@@ -1,0 +1,296 @@
+{
+	"main": {
+		"conditions": [
+			{
+				"c2id": 0,
+				"id": "isauthorized0",
+				"scriptName": "isAuthorized",
+				"highlight": false
+			},
+			{
+				"c2id": 1,
+				"id": "isnotauthorized1",
+				"scriptName": "isNotAuthorized",
+				"highlight": false
+			},
+			{
+				"c2id": 2,
+				"id": "userisauthorized2",
+				"scriptName": "UserIsAuthorized",
+				"highlight": false
+			},
+			{
+				"c2id": 3,
+				"id": "userisnotauthorized3",
+				"scriptName": "UserIsNotAuthorized",
+				"highlight": false
+			},
+			{
+				"c2id": 7,
+				"id": "menuvisible7",
+				"scriptName": "menuVisible",
+				"highlight": false
+			},
+			{
+				"c2id": 8,
+				"id": "gamebreakvisible8",
+				"scriptName": "gameBreakVisible",
+				"highlight": false
+			},
+			{
+				"c2id": 9,
+				"id": "pointsavailable9",
+				"scriptName": "pointsAvailable",
+				"highlight": false
+			}
+		],
+		"actions": [
+			{
+				"c2id": 0,
+				"id": "inititalize0",
+				"scriptName": "Inititalize",
+				"highlight": false,
+				"params": [
+					{"id":"appid0", "type":"string"}
+				]
+			},
+			{
+				"c2id": 14,
+				"id": "gamebreak14",
+				"scriptName": "gameBreak",
+				"highlight": false
+			}
+		],
+		"expressions": [
+		]
+	},
+	"user": {
+		"conditions": [
+			{
+				"c2id": 6,
+				"id": "dataready6",
+				"scriptName": "dataReady",
+				"highlight": false
+			}
+		],
+		"actions": [
+			{
+				"c2id": 1,
+				"id": "registerpopup1",
+				"scriptName": "RegisterPopup",
+				"highlight": false
+			},
+			{
+				"c2id": 2,
+				"id": "loginpopup2",
+				"scriptName": "LoginPopup",
+				"highlight": false
+			},
+			{
+				"c2id": 4,
+				"id": "submitprofileimage4",
+				"scriptName": "SubmitProfileImage",
+				"highlight": false,
+				"params": [
+					{"id":"image0", "type":"string"}
+				]
+			},
+			{
+				"c2id": 8,
+				"id": "onlinesavessave8",
+				"scriptName": "OnlineSavesSave",
+				"highlight": false,
+				"params": [
+					{"id":"key0", "type":"string"},
+					{"id":"value1", "type":"string"}
+				]
+			},
+			{
+				"c2id": 9,
+				"id": "onlinesavesload9",
+				"scriptName": "OnlineSavesLoad",
+				"highlight": false,
+				"params": [
+					{"id":"key0", "type":"string"}
+				]
+			},
+			{
+				"c2id": 10,
+				"id": "onlinesavesremove10",
+				"scriptName": "OnlineSavesRemove",
+				"highlight": false,
+				"params": [
+					{"id":"key0", "type":"string"}
+				]
+			},
+			{
+				"c2id": 13,
+				"id": "openprofile13",
+				"scriptName": "openProfile",
+				"highlight": false
+			},
+			{
+				"c2id": 15,
+				"id": "pointsfetch15",
+				"scriptName": "pointsFetch",
+				"highlight": false
+			}
+		],
+		"expressions": [
+			{
+				"c2id": 0,
+				"id": "username0",
+				"expressionName": "UserName",
+				"scriptName": "UserName",
+				"highlight": false,
+				"returnType": "string"
+			},
+			{
+				"c2id": 1,
+				"id": "sessionkey1",
+				"expressionName": "SessionKey",
+				"scriptName": "SessionKey",
+				"highlight": false,
+				"returnType": "string"
+			},
+			{
+				"c2id": 5,
+				"id": "getpoints5",
+				"expressionName": "GetPoints",
+				"scriptName": "GetPoints",
+				"highlight": false,
+				"returnType": "number"
+			}
+		]
+	},
+	"scores": {
+		"conditions": [
+		],
+		"actions": [
+			{
+				"c2id": 3,
+				"id": "submitscore3",
+				"scriptName": "SubmitScore",
+				"highlight": false,
+				"params": [
+					{"id":"score0", "type":"number"},
+					{"id":"table1", "type":"string"},
+					{"id":"allowduplicates2", "type":"number", "initialValue":"0"},
+					{"id":"highest3", "type":"number", "initialValue":"1"},
+					{"id":"playername_(optional)4", "type":"string"}
+				]
+			},
+			{
+				"c2id": 5,
+				"id": "showleaderboard5",
+				"scriptName": "ShowLeaderBoard",
+				"highlight": false,
+				"params": [
+					{"id":"table0", "type":"string"},
+					{"id":"mode1", "type":"string", "initialValue":"\"alltime\""},
+					{"id":"highest2", "type":"number", "initialValue":"1"}
+				]
+			}
+		],
+		"expressions": [
+		]
+	},
+	"achievements": {
+		"conditions": [
+		],
+		"actions": [
+			{
+				"c2id": 6,
+				"id": "achievementsave6",
+				"scriptName": "AchievementSave",
+				"highlight": false,
+				"params": [
+					{"id":"achievementtitle0", "type":"string"},
+					{"id":"achievementkey1", "type":"string"},
+					{"id":"overwrite2", "type":"number", "initialValue":"0"},
+					{"id":"allowduplicates3", "type":"number", "initialValue":"0"}
+				]
+			},
+			{
+				"c2id": 7,
+				"id": "showachievements7",
+				"scriptName": "ShowAchievements",
+				"highlight": false
+			}
+		],
+		"expressions": [
+		]
+	},
+	"protection": {
+		"conditions": [
+		],
+		"actions": [
+			{
+				"c2id": 11,
+				"id": "checkisblacklisted11",
+				"scriptName": "CheckIsBlacklisted",
+				"highlight": false
+			},
+			{
+				"c2id": 12,
+				"id": "checkissponsor12",
+				"scriptName": "CheckIsSponsor",
+				"highlight": false
+			}
+		],
+		"expressions": [
+		]
+	},
+	"protection_and_sponsor_api": {
+		"conditions": [
+			{
+				"c2id": 4,
+				"id": "blacklisted4",
+				"scriptName": "blacklisted",
+				"highlight": false
+			},
+			{
+				"c2id": 5,
+				"id": "sponsored5",
+				"scriptName": "sponsored",
+				"highlight": false
+			}
+		],
+		"actions": [
+		],
+		"expressions": [
+			{
+				"c2id": 3,
+				"id": "getisblacklisted3",
+				"expressionName": "GetIsBlacklisted",
+				"scriptName": "GetIsBlacklisted",
+				"highlight": false,
+				"returnType": "number"
+			},
+			{
+				"c2id": 4,
+				"id": "getissponsor4",
+				"expressionName": "GetIsSponsor",
+				"scriptName": "GetIsSponsor",
+				"highlight": false,
+				"returnType": "number"
+			}
+		]
+	},
+	"saves": {
+		"conditions": [
+		],
+		"actions": [
+		],
+		"expressions": [
+			{
+				"c2id": 2,
+				"id": "gateonlinesavesdata2",
+				"expressionName": "GateOnlineSavesData",
+				"scriptName": "GateOnlineSavesData",
+				"highlight": false,
+				"returnType": "string"
+			}
+		]
+	}
+}

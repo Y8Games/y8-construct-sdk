@@ -1,0 +1,26 @@
+{
+	"is-c3-addon": true,
+	"type": "plugin",
+	"name": "Y8",
+	"id": "IDNet",
+	"version": "2.6.0.0",
+	"author": "Y8.com",
+	"website": "https://github.com/webgroup-limited/y8-construct-sdk",
+	"documentation": "https://github.com/webgroup-limited/y8-construct-sdk",
+	"description": "Connect your C2 game with Y8",
+	"editor-scripts": [
+						"plugin.js",
+						"type.js",
+						"instance.js"
+					],
+	"file-list": [
+		"c2runtime/runtime.js",
+		"lang/en-US.json",
+		"aces.json",
+		"addon.json",
+		"icon.png",
+		"plugin.js",
+		"type.js",
+		"instance.js"
+	]
+}
