@@ -12,6 +12,23 @@ cr.plugins_.IDNet = function(runtime) {
 
 //var ID = null;
 
+function dataURItoBlob(dataURI) {
+  // convert base64/URLEncoded data component to raw binary data held in a string
+  var byteString;
+  if (dataURI.split(',')[0].indexOf('base64') >= 0)
+      byteString = atob(dataURI.split(',')[1]);
+  else
+      byteString = unescape(dataURI.split(',')[1]);
+  // separate out the mime component
+  var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+  // write the bytes of the string to a typed array
+  var ia = new Uint8Array(byteString.length);
+  for (var i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+  }
+  return new Blob([ia], {type:mimeString});
+}
+
 (function() {
   var pluginProto = cr.plugins_.IDNet.prototype;
     
@@ -39,6 +56,7 @@ cr.plugins_.IDNet = function(runtime) {
   var gameBreakVisible = 1;
   var pointsLoaded = 0;
   var pointsFetched = 0;
+  var avatarUpdated = 0;
   
   // called on startup for each object type
   typeProto.onCreate = function() {
@@ -130,6 +148,13 @@ cr.plugins_.IDNet = function(runtime) {
   Cnds.prototype.pointsAvailable = function() {
     return pointsLoaded;
   };
+
+  Cnds.prototype.onUpdateAvatar = function() {
+    if (avatarUpdated === 1) {
+      avatarUpdated = 0;
+      return 1;
+    }
+  };
   
   pluginProto.cnds = new Cnds();
   
@@ -160,7 +185,7 @@ cr.plugins_.IDNet = function(runtime) {
               if (data.status == 'not_linked') {
                 ID.login();
               }
-            });
+            }, true);
           }
         }
 
@@ -223,6 +248,17 @@ cr.plugins_.IDNet = function(runtime) {
           idNetInst.userAuthorized = true;
           //this.d.dispatch("auth.complete");
         }
+      });
+    }
+  };
+
+  Acts.prototype.updateAvatar = function() {
+    if (idNetInst.authorized) {
+      var canvas = document.createElement("canvas");
+      canvas.toBlob(function (blob) {
+        ID.Profile.updateAvatar(blob, function() {
+          avatarUpdated = 1;
+        });
       });
     }
   };

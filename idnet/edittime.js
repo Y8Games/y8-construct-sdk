@@ -3,7 +3,7 @@ function GetPluginSettings()
   return {
     "name":     "Y8",     // as appears in 'insert object' dialog, can be changed as long as "id" stays the same
     "id":     "IDNet",      // this is used to identify this plugin and is saved to the project; never change it
-    "version":    "2.6",          // (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
+    "version":    "2.7",          // (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
     "description":  "Connect your C2 game with Y8",
     "author":   "Y8.com",
     "help url":   "https://github.com/webgroup-limited/y8-construct-sdk",
@@ -58,6 +58,8 @@ AddCondition(8, cf_none, "gameBreak is visible", "Main", "gameBreak is visible",
 
 AddCondition(9, cf_none, "points data fetched", "Main", "points data available", "will run when pointsFetch is complete", "pointsAvailable");
 
+AddCondition(10, cf_none, "Avatar updated", "Main", "User's avatar updated", "When run after canvas has been submitted as an avatar", "onUpdateAvatar");
+
 ////////////////////////////////////////
 // Actions
 
@@ -70,10 +72,10 @@ AddCondition(9, cf_none, "points data fetched", "Main", "points data available",
 //       script_name);    // corresponding runtime function name
 
 AddStringParam("Appid", "appId");
-AddAction(0, 0, "Init", "Main", "Init", "Initialisation of Y8 Account", "Inititalize");
+AddAction(0, 0, "Init", "Main", "Init", "Init", "Inititalize");
 
 AddAction(1, 0, "Registration", "User", "Show registration menu", "Show registration menu", "RegisterPopup");
-AddAction(2, 0, "Login", "User", "Show login menu", "Shows login menu", "LoginPopup");
+AddAction(2, 0, "Login", "User", "Show login menu", "Login", "LoginPopup");
 
 AddNumberParam("Score", "The player's score value");
 AddStringParam("Table", "Table name");
@@ -83,12 +85,12 @@ AddStringParam("Playername (optional)", "Set playername");
 AddAction(3, 0, "Submit score", "scores", "Submit scores {0}", "Submit a player's score", "SubmitScore");
 
 AddStringParam("Image", "Text to add to the shout box.");
-AddAction(4, 0, "Send image to profile", "User", "Send image {0}", "Allow the user to post image to page", "SubmitProfileImage");
+AddAction(4, 0, "Screenshot to profile", "User", "Screenshot to profile {0}", "Allow the user to post image to page", "SubmitProfileImage");
 
 AddStringParam("Table", "The table name from Y8 Account apps page");
 AddStringParam("Mode", "Equals alltime, last30days, last7days, today, or newest.", '"alltime"');
 AddNumberParam("Highest", " Set to 0 if a low score is better.", 1);
-AddAction(5, 0, "Show leaderboard", "scores", "Show data leaderboard", "Show data leaderboard", "ShowLeaderBoard");
+AddAction(5, 0, "Show leaderboard", "scores", "Show leaderboard", "Show data leaderboard", "ShowLeaderBoard");
 
 AddStringParam("AchievementTitle", "AchievementName");
 AddStringParam("AchievementKey", "AchievementKey");
@@ -100,22 +102,24 @@ AddAction(7, 0, "Show achievements", "Achievements", "Show achievements", "Show 
 
 AddStringParam("Key", "Key");
 AddStringParam("Value", "Value");
-AddAction(8, 0, "Save user data", "User", "Save data to online saves with title {0} and value {1}", "Save user data", "OnlineSavesSave");
+AddAction(8, 0, "Save user data", "User", "Save user data {0} and value {1}", "Save user data", "OnlineSavesSave");
 
 AddStringParam("Key", "Key");
-AddAction(9, 0, "Load user data", "User", "Load data from online saves with title {0}", "Load user data", "OnlineSavesLoad");
+AddAction(9, 0, "Load user data", "User", "Load user data {0}", "Load user data", "OnlineSavesLoad");
 
 AddStringParam("Key", "Key");
-AddAction(10, 0, "Remove user data", "User", "Remove data from online saves with title {0}", "Remove user data", "OnlineSavesRemove");
+AddAction(10, 0, "Remove user data", "User", "Remove user data {0}", "Remove user data", "OnlineSavesRemove");
 
-AddAction(11, 0, "CheckIsBlacklisted", "Protection", "Check if domain on blacklist", "Check if domain on blacklist", "CheckIsBlacklisted");
-AddAction(12, 0, "CheckIsSponsor", "Protection", "Check if domain on sponsorlist", "Check if domain on sponsorlist", "CheckIsSponsor");
+AddAction(11, 0, "CheckIsBlacklisted", "Protection", "Is blacklisted", "Check if domain on blacklist", "CheckIsBlacklisted");
+AddAction(12, 0, "CheckIsSponsor", "Protection", "Is sponsor", "Check if domain on sponsorlist", "CheckIsSponsor");
 
-AddAction(13, 0, "OpenProfile", "User", "Open a player's profile", "Open a player's profile", "openProfile");
+AddAction(13, 0, "OpenProfile", "User", "Open profile", "Open a player's profile", "openProfile");
 
-AddAction(14, 0, "gameBreak", "Main", "Play advertisement (requires activation)", "Play advertisement", "gameBreak");
+AddAction(14, 0, "gameBreak", "Main", "Play advertisement", "Play advertisement (requires activation)", "gameBreak");
 
-AddAction(15, 0, "Fetch player points", "User", "Player points are awarded for playing games.", "Fetch player points", "pointsFetch");
+AddAction(15, 0, "Fetch player points", "User", "Fetch player points", "Fetch player points", "pointsFetch");
+
+AddAction(16, 0, "Canvas to avatar", "User", "Canvas to avatar", "Turn canvas into profile picture", "updateAvatar");
 
 ////////////////////////////////////////
 // Expressions
