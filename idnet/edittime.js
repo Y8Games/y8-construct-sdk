@@ -3,7 +3,7 @@ function GetPluginSettings()
   return {
     "name":     "Y8",     // as appears in 'insert object' dialog, can be changed as long as "id" stays the same
     "id":     "IDNet",      // this is used to identify this plugin and is saved to the project; never change it
-    "version":    "2.7",          // (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
+    "version":    "2.8",          // (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
     "description":  "Connect your C2 game with Y8",
     "author":   "Y8.com",
     "help url":   "https://github.com/webgroup-limited/y8-construct-sdk",
@@ -84,7 +84,7 @@ AddNumberParam("Highest", "Table name", 1);
 AddStringParam("Playername (optional)", "Set playername");
 AddAction(3, 0, "Submit score", "scores", "Submit scores {0}", "Submit a player's score", "SubmitScore");
 
-AddStringParam("Image", "Text to add to the shout box.");
+AddStringParam("Image", "CanvasSnapshot");
 AddAction(4, 0, "Screenshot to profile", "User", "Screenshot to profile {0}", "Allow the user to post image to page", "SubmitProfileImage");
 
 AddStringParam("Table", "The table name from Y8 Account apps page");
@@ -119,6 +119,8 @@ AddAction(14, 0, "gameBreak", "Main", "Play advertisement", "Play advertisement 
 
 AddAction(15, 0, "Fetch player points", "User", "Fetch player points", "Fetch player points", "pointsFetch");
 
+AddStringParam("Image", "CanvasSnapshot");
+AddStringParam("ContentType", "image/jpg or image/png");
 AddAction(16, 0, "Canvas to avatar", "User", "Canvas to avatar", "Turn canvas into profile picture", "updateAvatar");
 
 ////////////////////////////////////////

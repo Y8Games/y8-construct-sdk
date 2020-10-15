@@ -4,13 +4,31 @@
 assert2(cr, "cr namespace not created");
 assert2(cr.plugins_, "cr.plugins_ not created");
 
+const b64toBlob = (b64Data, contentType='', sliceSize=512) => {
+  const byteCharacters = atob(b64Data);
+  const byteArrays = [];
+
+  for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+    const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+    const byteNumbers = new Array(slice.length);
+    for (let i = 0; i < slice.length; i++) {
+      byteNumbers[i] = slice.charCodeAt(i);
+    }
+
+    const byteArray = new Uint8Array(byteNumbers);
+    byteArrays.push(byteArray);
+  }
+
+  const blob = new Blob(byteArrays, {type: contentType});
+  return blob;
+}
+
 /////////////////////////////////////
 // Plugin class
 cr.plugins_.IDNet = function(runtime) {
   this.runtime = runtime;
 };
-
-//var ID = null;
 
 (function() {
   var pluginProto = cr.plugins_.IDNet.prototype;
@@ -165,7 +183,7 @@ cr.plugins_.IDNet = function(runtime) {
             idNetInst.pid = response.user.pid;
             idNetInst.userAuthorized = true;
             ID.getLoginStatus(function(data) {
-              if (data.status == 'not_linked') {
+              if (data.status == 'not_linked' || data.status == 'uncomplete') {
                 ID.login();
               }
             }, true);
@@ -235,13 +253,10 @@ cr.plugins_.IDNet = function(runtime) {
     }
   };
 
-  Acts.prototype.updateAvatar = function() {
+  Acts.prototype.updateAvatar = function(base64, contentType) {
     if (idNetInst.authorized) {
-      var canvas = document.createElement("canvas");
-      canvas.toBlob(function (blob) {
-        ID.Profile.updateAvatar(blob, function() {
-          avatarUpdated = 1;
-        });
+      ID.Profile.updateAvatar(b64toBlob(base64.split('base64,')[1], contentType), function() {
+        avatarUpdated = 1;
       });
     }
   };
