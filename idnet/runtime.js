@@ -48,13 +48,14 @@ cr.plugins_.IDNet = function(runtime) {
   var idNetInst = null;
   var idnetUserName = "Guest";
   var authorized = false;
+  var gameId;
   var userAuthorized = false;
   var idnetSessionKey = "";
   var onlineSavesData = "";
   var isBlacklisted = 0;
   var isSponsor = 0;
   var gotSaveData = 0;
-  var gameBreakVisible = 1;
+  var advertisementVisible = 1;
   var pointsLoaded = 0;
   var pointsFetched = 0;
   var avatarUpdated = 0;
@@ -142,8 +143,8 @@ cr.plugins_.IDNet = function(runtime) {
     }
   };
 
-  Cnds.prototype.gameBreakVisible = function() {
-    return idNetInst.gameBreakVisible;
+  Cnds.prototype.advertisementVisible = function() {
+    return idNetInst.advertisementVisible;
   };
 
   Cnds.prototype.pointsAvailable = function() {
@@ -217,6 +218,10 @@ cr.plugins_.IDNet = function(runtime) {
       
       idNetInst.authorized = true;
     }
+  };
+
+  Acts.prototype.adsInititalize = function(gameId) {
+    idNetInst.gameId = gameId;
   };
   
   Acts.prototype.RegisterPopup = function() {
@@ -357,10 +362,10 @@ cr.plugins_.IDNet = function(runtime) {
     ID.openProfile();
   };
 
-  Acts.prototype.gameBreak = function () {
-    idNetInst.gameBreakVisible = 1;
-    ID.gameBreak(function() {
-      idNetInst.gameBreakVisible = 0;
+  Acts.prototype.showAdvertisement = function () {
+    idNetInst.advertisementVisible = 1;
+    ID.ads.display(function() {
+      idNetInst.advertisementVisible = 0;
     });
   };
 
