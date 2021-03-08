@@ -3,7 +3,7 @@ function GetPluginSettings()
   return {
     "name":     "Y8",     // as appears in 'insert object' dialog, can be changed as long as "id" stays the same
     "id":     "IDNet",      // this is used to identify this plugin and is saved to the project; never change it
-    "version":    "2.8",          // (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
+    "version":    "2.9",          // (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
     "description":  "Connect your C2 game with Y8",
     "author":   "Y8.com",
     "help url":   "https://github.com/webgroup-limited/y8-construct-sdk",
@@ -54,7 +54,7 @@ AddCondition(6, cf_none, "Player data loaded", "User", "player data loaded", "Fi
 
 AddCondition(7, cf_none, "Y8 Menu is visible", "Main", "Menu is visible", "Running when the menu is open", "menuVisible");
 
-AddCondition(8, cf_none, "gameBreak is visible", "Main", "gameBreak is visible", "will run when an ad is playing", "gameBreakVisible");
+AddCondition(8, cf_none, "advertisement is visible", "Main", "advertisement is visible", "will run when an ad is playing", "advertisementVisible");
 
 AddCondition(9, cf_none, "points data fetched", "Main", "points data available", "will run when pointsFetch is complete", "pointsAvailable");
 
@@ -115,13 +115,16 @@ AddAction(12, 0, "CheckIsSponsor", "Protection", "Is sponsor", "Check if domain 
 
 AddAction(13, 0, "OpenProfile", "User", "Open profile", "Open a player's profile", "openProfile");
 
-AddAction(14, 0, "gameBreak", "Main", "Play advertisement", "Play advertisement (requires activation)", "gameBreak");
+AddAction(14, 0, "showAdvertisement", "Main", "Play advertisement", "Play advertisement (requires activation)", "showAdvertisement");
 
 AddAction(15, 0, "Fetch player points", "User", "Fetch player points", "Fetch player points", "pointsFetch");
 
 AddStringParam("Image", "CanvasSnapshot");
 AddStringParam("ContentType", "image/jpg or image/png");
 AddAction(16, 0, "Canvas to avatar", "User", "Canvas to avatar", "Turn canvas into profile picture", "updateAvatar");
+
+AddStringParam("GameID", "gameId");
+AddAction(17, 0, "Ads Init", "Main", "Ads Init", "Ads Init", "adsInititalize");
 
 ////////////////////////////////////////
 // Expressions
